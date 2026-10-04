@@ -114,6 +114,7 @@ import {
   saveSelectedVariantLabel,
 } from "@/lib/funnel";
 import { useDeliveryWindow } from "@/hooks/use-delivery-window";
+import wapHighlightImage from "@/assets/uploads/5603.png";
 import { cn } from "@/lib/utils";
 
 const protectionTopics = [
@@ -369,7 +370,7 @@ export function ProductPage({
   const checkoutKey = productKey;
   const selectedGallery =
     isWap
-      ? [selectedWapVoltage.image, ...wapGallery.filter((image) => image !== selectedWapVoltage.image)]
+      ? [wapHighlightImage, ...wapGallery]
       : isMagnesio
         ? [selectedMagnesioFlavor.image]
       : isBermuda
