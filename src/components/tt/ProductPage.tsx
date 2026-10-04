@@ -96,6 +96,14 @@ import {
   reviews as tablet2Reviews,
 } from "@/lib/tablet2-catalog";
 import {
+  creatorVideos as wapCreatorVideos,
+  descriptionImages as wapDescriptionImages,
+  gallery as wapGallery,
+  money as wapMoney,
+  product as wapProduct,
+  reviews as wapReviews,
+} from "@/lib/wap-catalog";
+import {
   getFlashDeadline,
   getQty,
   hhmmss,
@@ -133,7 +141,17 @@ const protectionTopics = [
 export function ProductPage({
   productKey = "motoserra",
 }: {
-  productKey?: "motoserra" | "ferramentas" | "panela" | "forno" | "tablet" | "tablet2" | "short" | "bermuda" | "magnesio";
+  productKey?:
+    | "motoserra"
+    | "ferramentas"
+    | "panela"
+    | "forno"
+    | "tablet"
+    | "tablet2"
+    | "short"
+    | "bermuda"
+    | "magnesio"
+    | "wap";
 }) {
   const isFerramentas = productKey === "ferramentas";
   const isPanela = productKey === "panela";
@@ -143,7 +161,10 @@ export function ProductPage({
   const isShort = productKey === "short";
   const isBermuda = productKey === "bermuda";
   const isMagnesio = productKey === "magnesio";
-  const gallery = isMagnesio
+  const isWap = productKey === "wap";
+  const gallery = isWap
+    ? wapGallery
+    : isMagnesio
     ? magnesioGallery
     : isBermuda
       ? bermudaGallery
@@ -160,7 +181,9 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasGallery
           : chainsawGallery;
-  const descriptionImages = isMagnesio
+  const descriptionImages = isWap
+    ? wapDescriptionImages
+    : isMagnesio
     ? magnesioDescriptionImages
     : isBermuda
       ? bermudaDescriptionImages
@@ -177,7 +200,9 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasDescriptionImages
           : chainsawDescriptionImages;
-  const creatorVideos = isMagnesio
+  const creatorVideos = isWap
+    ? wapCreatorVideos
+    : isMagnesio
     ? magnesioCreatorVideos
     : isBermuda
       ? bermudaCreatorVideos
@@ -194,7 +219,9 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasCreatorVideos
           : chainsawCreatorVideos;
-  const product = isMagnesio
+  const product = isWap
+    ? wapProduct
+    : isMagnesio
     ? magnesioProduct
     : isBermuda
       ? bermudaProduct
@@ -211,7 +238,9 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasProduct
           : chainsawProduct;
-  const reviews = isMagnesio
+  const reviews = isWap
+    ? wapReviews
+    : isMagnesio
     ? magnesioReviews
     : isBermuda
       ? bermudaReviews
@@ -228,7 +257,9 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasReviews
           : chainsawReviews;
-  const money = isMagnesio
+  const money = isWap
+    ? wapMoney
+    : isMagnesio
     ? magnesioMoney
     : isBermuda
       ? bermudaMoney
@@ -287,6 +318,10 @@ export function ProductPage({
     },
   ];
   const bermudaSizeOptions = ["38", "40", "42", "44", "46", "48"];
+  const wapVoltageOptions = [
+    { name: "110V", image: wapGallery[0] },
+    { name: "220V", image: wapGallery[0] },
+  ];
   const magnesioFlavorOptions = [
     { name: "Maracujá", image: magnesioColorImages.Maracujá },
     {
@@ -320,6 +355,7 @@ export function ProductPage({
   const [selectedShortSize, setSelectedShortSize] = useState("M");
   const [selectedBermudaColor, setSelectedBermudaColor] = useState(bermudaColorOptions[0] ?? fallbackVariant);
   const [selectedBermudaSize, setSelectedBermudaSize] = useState("42");
+  const [selectedWapVoltage, setSelectedWapVoltage] = useState(wapVoltageOptions[0] ?? fallbackVariant);
   const [selectedMagnesioFlavor, setSelectedMagnesioFlavor] = useState(
     magnesioFlavorOptions[0] ?? fallbackVariant,
   );
@@ -335,8 +371,10 @@ export function ProductPage({
   const [saved, setSaved] = useState(false);
   const checkoutKey = productKey;
   const selectedGallery =
-    isMagnesio
-      ? [selectedMagnesioFlavor.image]
+    isWap
+      ? [selectedWapVoltage.image, ...wapGallery.filter((image) => image !== selectedWapVoltage.image)]
+      : isMagnesio
+        ? [selectedMagnesioFlavor.image]
       : isBermuda
         ? [selectedBermudaColor.image, ...bermudaGallery.filter((image) => image !== selectedBermudaColor.image)]
       : isShort
@@ -361,6 +399,10 @@ export function ProductPage({
     if (isTablet2) saveSelectedVariantImage(selectedTablet2Color.image);
     if (isShort) saveSelectedVariantImage(selectedShortColor.image);
     if (isBermuda) saveSelectedVariantImage(selectedBermudaColor.image);
+    if (isWap) {
+      saveSelectedVariantImage(selectedWapVoltage.image);
+      saveSelectedVariantLabel(selectedWapVoltage.name);
+    }
     if (isMagnesio) saveSelectedVariantImage(selectedMagnesioFlavor.image);
     const deadline = getFlashDeadline();
     const tick = () => setRemaining(deadline - Date.now());
@@ -596,8 +638,10 @@ export function ProductPage({
                 <LayoutGrid aria-hidden="true" className="h-[16px] w-[16px] shrink-0 text-[#5a5b60]" strokeWidth={1.9} />
                 <img
                   src={
-                    isMagnesio
-                      ? selectedMagnesioFlavor.image
+                    isWap
+                      ? selectedWapVoltage.image
+                      : isMagnesio
+                        ? selectedMagnesioFlavor.image
                       : isBermuda
                         ? selectedBermudaColor.image
                       : isPanela
@@ -636,7 +680,9 @@ export function ProductPage({
                               ? `${selectedBermudaColor.name} · ${selectedBermudaSize}`
                               : isMagnesio
                                 ? selectedMagnesioFlavor.name
-                                : product.variant}
+                                : isWap
+                                  ? selectedWapVoltage.name
+                                  : product.variant}
                   </span>
                 </span>
               </div>
@@ -908,9 +954,11 @@ export function ProductPage({
           <div className="flex gap-3">
             <img
               src={
-                isMagnesio
-                  ? selectedMagnesioFlavor.image
-                  : isPanela
+                isWap
+                  ? selectedWapVoltage.image
+                  : isMagnesio
+                    ? selectedMagnesioFlavor.image
+                    : isPanela
                     ? selectedPanelaColor.image
                   : isTablet2
                     ? selectedTablet2Color.image
@@ -919,9 +967,11 @@ export function ProductPage({
                       : gallery[0]
               }
               alt={
-                isMagnesio
-                  ? selectedMagnesioFlavor.name
-                  : isBermuda
+                isWap
+                  ? selectedWapVoltage.name
+                  : isMagnesio
+                    ? selectedMagnesioFlavor.name
+                    : isBermuda
                     ? selectedBermudaColor.name
                   : isPanela
                     ? selectedPanelaColor.name
@@ -969,10 +1019,12 @@ export function ProductPage({
             </div>
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
-            {isPanela || isTablet || isTablet2 || isShort || isBermuda
+            {isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
               ? `Cor (${
                   isPanela
-                    ? panelaColorOptions.length
+                    ? wapVoltageOptions.length
+                    : isPanela
+                      ? panelaColorOptions.length
                     : isTablet2
                       ? tablet2ColorOptions.length
                       : isShort
@@ -1003,6 +1055,7 @@ export function ProductPage({
                   key={option.name}
                   type="button"
                   onClick={() => {
+                    if (isWap) setSelectedWapVoltage(option);
                     if (isPanela) setSelectedPanelaColor(option);
                     if (isTablet2) {
                       setSelectedTablet2Color(option);
@@ -1015,7 +1068,7 @@ export function ProductPage({
                     if (isShort) setSelectedShortColor(option);
                     if (isBermuda) setSelectedBermudaColor(option);
                     if (isMagnesio) setSelectedMagnesioFlavor(option);
-                    if (!isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
+                    if (!isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
                     saveSelectedVariantImage(option.image);
                     saveSelectedVariantLabel(
                       isBermuda

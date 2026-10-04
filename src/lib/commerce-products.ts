@@ -12,6 +12,7 @@ import { gallery as shortGallery, product as shortProduct } from "@/lib/short-ca
 import { gallery as bermudaGallery, product as bermudaProduct } from "@/lib/bermuda-catalog";
 import { gallery as magnesioGallery, product as magnesioProduct } from "@/lib/magnesio-catalog";
 import { gallery as driftGallery, product as driftProduct } from "@/lib/drift-catalog";
+import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog";
 
 export type ProductKey =
   | "motoserra"
@@ -27,7 +28,8 @@ export type ProductKey =
   | "short"
   | "bermuda"
   | "magnesio"
-  | "drift";
+  | "drift"
+  | "wap";
 
 export interface CheckoutProduct {
   key: ProductKey;
@@ -46,7 +48,8 @@ export interface CheckoutProduct {
     | "/short"
     | "/bermuda"
     | "/magnesio"
-    | "/drift";
+    | "/drift"
+    | "/wap";
   title: string;
   image: string;
   price: number;
@@ -62,6 +65,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  wap: {
+    key: "wap",
+    id: "lavadora-wap-agil-1800-1300psi",
+    pagePath: "/wap",
+    title: wapProduct.titleShort,
+    image: firstImage(wapGallery),
+    price: wapProduct.price,
+    originalPrice: wapProduct.originalPrice,
+    discountPercent: wapProduct.discountPercent,
+    shipping: wapProduct.shipping,
+    rating: wapProduct.rating,
+    variant: wapProduct.variant,
+    storeName: wapProduct.store.name,
+  },
   drift: {
     key: "drift",
     id: "hdj-drift-trike-eletrico-350w-36v",
@@ -276,4 +293,5 @@ export const isProductKey = (value: unknown): value is ProductKey =>
   value === "short" ||
   value === "bermuda" ||
   value === "magnesio" ||
-  value === "drift";
+  value === "drift" ||
+  value === "wap";
