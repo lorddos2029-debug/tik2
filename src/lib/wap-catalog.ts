@@ -10,7 +10,7 @@ import wapReviewImage4 from "@/assets/uploads/5600.png";
 
 export const gallery = [wapImage1, wapImage2, wapImage3, wapImage4];
 
-export const descriptionImages = [wapImage1, wapImage2, wapImage3, wapImage4];
+export const descriptionImages = [wapImage1, wapImage2, wapImage3, wapImage2];
 
 export const creatorVideos: Array<{ id: string; href: string }> = [];
 
