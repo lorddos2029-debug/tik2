@@ -68,11 +68,15 @@ export function DriftProductPage() {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
+  const reviewList = Array.from({ length: 10 }, (_, index) => reviews[index % reviews.length]).filter(
+    (review): review is (typeof reviews)[number] => review !== undefined,
+  );
+
   const displayedReviews = showAllReviews
-    ? Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]).filter(
+    ? Array.from({ length: 60 }, (_, index) => reviewList[index % reviewList.length]).filter(
         (review): review is (typeof reviews)[number] => review !== undefined,
       )
-    : reviews;
+    : reviewList;
 
   const selectedGallery = gallery;
 
@@ -198,7 +202,7 @@ export function DriftProductPage() {
           </div>
           <div className="mt-2 flex items-center gap-2 text-[12px]">
             <span className="font-bold text-[#f59e0b]">★★★★★</span>
-            <span className="font-semibold">{reviews.length} avaliações</span>
+            <span className="font-semibold">{reviewList.length} avaliações</span>
             <span className="text-[#5a5b60]">· Produto verificado</span>
           </div>
         </div>
@@ -304,9 +308,9 @@ export function DriftProductPage() {
         <div className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center gap-1.5 text-[14px] font-semibold">
             <Star className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
-            {product.rating}
+            4.9
             <span className="mx-1 text-[#d0d0d3]">|</span>
-            Avaliações dos clientes ({reviews.length})
+            Avaliações dos clientes ({reviewList.length})
             <Info className="h-3.5 w-3.5 text-[#8a8b91]" />
           </div>
 
@@ -335,7 +339,7 @@ export function DriftProductPage() {
           >
             {showAllReviews
               ? "Ocultar avaliações"
-              : `Ver todas as ${reviews.length} avaliações`}
+              : `Ver todas as ${reviewList.length} avaliações`}
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </button>
         </div>
@@ -346,11 +350,11 @@ export function DriftProductPage() {
               className="grid h-12 w-12 place-items-center rounded-full text-xs font-black text-white"
               style={{ backgroundColor: product.store.color }}
             >
-              {product.store.initials}
+              TikTok
             </div>
             <div className="min-w-0 flex-1">
-              <div className="font-bold">{product.store.name}</div>
-              <div className="mt-0.5 text-[12px] text-[#5a5b60]">Produto HDJ</div>
+              <div className="font-bold">TikTok Shop</div>
+              <div className="mt-0.5 text-[12px] text-[#5a5b60]">24.6K vendido(s)</div>
             </div>
             <button
               type="button"
