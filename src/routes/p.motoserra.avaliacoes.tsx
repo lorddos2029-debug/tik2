@@ -22,7 +22,9 @@ export const Route = createFileRoute("/p/motoserra/avaliacoes")({
 
 function ReviewsPage() {
   const router = useRouter();
-  const all = Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]);
+  const all = Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]).filter(
+    (review): review is (typeof reviews)[number] => review !== undefined,
+  );
 
   return (
     <Shell className="bg-white">

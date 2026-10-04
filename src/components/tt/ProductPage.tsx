@@ -996,7 +996,7 @@ export function ProductPage({
                       ? bermudaColorOptions
                       : isMagnesio
                         ? magnesioFlavorOptions
-                        : [{ name: product.variant, image: gallery[0] }]
+                        : [{ name: product.variant, image: gallery[0] ?? "/favicon.png" }]
             ).map(
               (option) => (
                 <button
