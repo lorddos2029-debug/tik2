@@ -1,23 +1,55 @@
 import type { Review } from "@/lib/catalog";
-import driftImage1 from "@/assets/uploads/drift-1.png";
-import driftImage2 from "@/assets/uploads/drift-2.png";
-import driftImage3 from "@/assets/uploads/drift-3.png";
-import driftImage4 from "@/assets/uploads/drift-4.png";
+import driftImage1 from "@/assets/uploads/5578.png";
+import driftImage2 from "@/assets/uploads/5579.png";
+import driftImage3 from "@/assets/uploads/5580.png";
+import driftImage4 from "@/assets/uploads/5581.png";
 
 export const colorImages = { fogoGelo: driftImage1 };
 export const gallery = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const descriptionImages = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const creatorVideos: { id: string; href: string }[] = [];
-export const reviews: Review[] = [];
+
+export const reviews: Review[] = [
+  {
+    name: "C****a M.",
+    stars: 5,
+    variant: "Fogo & Gelo",
+    text: "O drift trike é muito divertido e as rodas traseiras giram de verdade. As três velocidades ajudam bastante no controle.",
+    photos: [],
+    verified: true,
+    country: "Brasil",
+    date: "há 2 dias",
+  },
+  {
+    name: "R****o S.",
+    stars: 5,
+    variant: "Fogo & Gelo",
+    text: "Chegou bem embalado e meu filho adorou. A montagem foi simples e o acabamento é muito bonito.",
+    photos: [],
+    verified: true,
+    country: "Brasil",
+    date: "há 5 dias",
+  },
+  {
+    name: "A****a P.",
+    stars: 4,
+    variant: "Fogo & Gelo",
+    text: "Produto potente e estável. O seletor de velocidade e o display de bateria são muito úteis.",
+    photos: [],
+    verified: true,
+    country: "Brasil",
+    date: "há 1 semana",
+  },
+];
 
 export const product = {
   slug: "drift",
   titleShort: "HDJ Drift Trike Elétrico Infantil 350W 36V com 3 Velocidades, Rodas Traseiras Giratórias 360° e Kit de Proteção",
   titleFull: "HDJ Drift Trike Elétrico Infantil 350W 36V com 3 Velocidades, Rodas Traseiras Giratórias 360° e Kit de Proteção",
   price: 97.9,
-  originalPrice: 97.9,
-  discountPercent: 0,
-  discountValue: 0,
+  originalPrice: 897.9,
+  discountPercent: 89,
+  discountValue: 800,
   shipping: 0,
   installments: { count: 4, value: 24.48 },
   rating: 0,

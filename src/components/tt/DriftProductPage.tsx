@@ -20,6 +20,7 @@ import {
   descriptionImages,
   gallery,
   product,
+  reviews,
 } from "@/lib/drift-catalog";
 import {
   getQty,
@@ -115,11 +116,24 @@ export function DriftProductPage() {
 
         <div className="relative overflow-hidden bg-[#ff6a1f] px-4 py-2 text-white">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-end gap-1">
-              <span className="mb-1 text-xs font-bold">R$</span>
-              <span className="text-[28px] font-extrabold leading-none">
-                97<span className="text-[15px]">,90</span>
-              </span>
+            <div className="flex items-end gap-2">
+              <div>
+                <div className="text-[11px] font-semibold line-through opacity-80">
+                  De R$ {product.originalPrice.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
+                <div className="flex items-end gap-1">
+                  <span className="mb-1 text-xs font-bold">R$</span>
+                  <span className="text-[28px] font-extrabold leading-none">
+                    {product.price.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </div>
+              </div>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-1 text-[13px] font-extrabold">
@@ -151,6 +165,11 @@ export function DriftProductPage() {
             <span>HDJ</span>
             <span className="mx-1 text-[#d0d0d3]">|</span>
             <span>Modelo Fogo & Gelo</span>
+          </div>
+          <div className="mt-2 flex items-center gap-2 text-[12px]">
+            <span className="font-bold text-[#f59e0b]">★★★★★</span>
+            <span className="font-semibold">{reviews.length} avaliações</span>
+            <span className="text-[#5a5b60]">· Produto verificado</span>
           </div>
         </div>
 
@@ -225,11 +244,28 @@ export function DriftProductPage() {
 
         <div className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center gap-1.5 text-[14px] font-semibold">
-            <Star className="h-4 w-4 text-[#c8c8cc]" />
-            Avaliações dos clientes (0)
+            <Star className="h-4 w-4 fill-[#f59e0b] text-[#f59e0b]" />
+            Avaliações dos clientes ({reviews.length})
           </div>
-          <div className="mt-4 rounded-lg bg-[#f7f7f8] px-3 py-3 text-[13px] leading-[1.45] text-[#5a5b60]">
-            Ainda não há avaliações cadastradas para este produto.
+          <div className="mt-3 space-y-3">
+            {reviews.map((review) => (
+              <article
+                key={review.name}
+                className="rounded-lg bg-[#f7f7f8] px-3 py-3 text-[13px] leading-[1.45]"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-bold">{review.name}</span>
+                  <span className="text-[11px] text-[#5a5b60]">{review.date}</span>
+                </div>
+                <div className="mt-1 text-[11px] text-[#f59e0b]">
+                  {"★".repeat(review.stars)}
+                </div>
+                <p className="mt-1 text-[#5a5b60]">{review.text}</p>
+                <div className="mt-1 text-[11px] font-semibold text-[#00a99d]">
+                  Compra verificada
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -333,8 +369,17 @@ export function DriftProductPage() {
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between">
                 <div>
+                  <div className="text-[11px] font-semibold text-[#5a5b60] line-through">
+                    De R$ {product.originalPrice.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </div>
                   <div className="text-[28px] font-extrabold text-[#fe2c55]">
-                    R$ 97<span className="text-lg">,90</span>
+                    R$ {product.price.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </div>
                   <div className="mt-2 text-xs font-semibold text-[#5a5b60]">
                     350W · 36V · 3 velocidades
