@@ -1081,7 +1081,13 @@ export function ProductPage({
                   }}
                   className={cn(
                     "relative inline-block overflow-hidden rounded-lg border-2",
-                    (!isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) ||
+                    (!isWap &&
+                      !isPanela &&
+                      !isTablet &&
+                      !isTablet2 &&
+                      !isShort &&
+                      !isBermuda &&
+                      !isMagnesio) ||
                     (isPanela && selectedPanelaColor.name === option.name) ||
                     (isTablet && selectedTabletColor.name === option.name) ||
                     (isTablet2 && selectedTablet2Color.name === option.name) ||
