@@ -18,16 +18,16 @@ export const gallery = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const descriptionImages = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const creatorVideos = [
   {
-    id: "7682124835245395221",
-    href: "https://www.tiktok.com/@acheilazaparoli/video/7682124835245395221",
+    id: "7674686939982761237",
+    href: "https://www.tiktok.com/@lanacasinha/video/7674686939982761237",
   },
   {
-    id: "7688380165759454485",
-    href: "https://www.tiktok.com/@andressaebetao/video/7688380165759454485",
+    id: "7682070986207874311",
+    href: "https://www.tiktok.com/@gloriaachadinhos/video/7682070986207874311",
   },
   {
-    id: "7687642483508907285",
-    href: "https://www.tiktok.com/@marcele.aquino15/video/7687642483508907285",
+    id: "7684793178460917000",
+    href: "https://www.tiktok.com/@achadinhos_pamella/video/7684793178460917000",
   },
 ];
 
