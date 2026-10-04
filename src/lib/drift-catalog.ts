@@ -7,7 +7,20 @@ import driftImage4 from "@/assets/uploads/5581.png";
 export const colorImages = { fogoGelo: driftImage1 };
 export const gallery = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const descriptionImages = [driftImage1, driftImage2, driftImage3, driftImage4];
-export const creatorVideos: { id: string; href: string }[] = [];
+export const creatorVideos = [
+  {
+    id: "7682124835245395221",
+    href: "https://www.tiktok.com/@acheilazaparoli/video/7682124835245395221",
+  },
+  {
+    id: "7688380165759454485",
+    href: "https://www.tiktok.com/@andressaebetao/video/7688380165759454485",
+  },
+  {
+    id: "7687642483508907285",
+    href: "https://www.tiktok.com/@marcele.aquino15/video/7687642483508907285",
+  },
+];
 
 export const reviews: Review[] = [
   {

@@ -16,12 +16,14 @@ export function formatDeliveryWindow(referenceDate: Date): string {
 }
 
 export function useDeliveryWindow(): string {
-  const [deliveryWindow, setDeliveryWindow] = useState("");
+  const [deliveryWindow, setDeliveryWindow] = useState(() =>
+    formatDeliveryWindow(new Date()),
+  );
 
   useEffect(() => {
     const update = () => setDeliveryWindow(formatDeliveryWindow(new Date()));
-    update();
     const intervalId = window.setInterval(update, 60_000);
+
     return () => window.clearInterval(intervalId);
   }, []);
 

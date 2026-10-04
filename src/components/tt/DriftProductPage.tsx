@@ -3,11 +3,14 @@ import {
   Bookmark,
   Check,
   ChevronRight,
+  Info,
   LayoutGrid,
   MessageCircle,
+  Package,
   ShieldCheck,
   Star,
   Store,
+  Ticket,
   Truck,
   X,
   Zap,
@@ -17,13 +20,17 @@ import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
   colorImages,
+  creatorVideos,
   descriptionImages,
   gallery,
+  money,
   product,
   reviews,
 } from "@/lib/drift-catalog";
 import {
+  getFlashDeadline,
   getQty,
+  hhmmss,
   saveQty,
   saveSelectedProduct,
   saveSelectedVariantImage,
@@ -43,6 +50,7 @@ const protectionTopics = [
 export function DriftProductPage() {
   const deliveryWindow = useDeliveryWindow();
   const [slide, setSlide] = useState(1);
+  const [remaining, setRemaining] = useState(0);
   const [qty, setQty] = useState(1);
   const [variantOpen, setVariantOpen] = useState(false);
   const [protectionOpen, setProtectionOpen] = useState(false);
@@ -59,6 +67,14 @@ export function DriftProductPage() {
   useEffect(() => {
     setQty(getQty());
     saveSelectedVariantImage(defaultModel.image);
+
+    const deadline = getFlashDeadline();
+    const tick = () => setRemaining(deadline - Date.now());
+
+    tick();
+    const intervalId = window.setInterval(tick, 1000);
+
+    return () => window.clearInterval(intervalId);
   }, []);
 
   const toast = (message: string) => {
@@ -114,33 +130,34 @@ export function DriftProductPage() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-[#ff6a1f] px-4 py-2 text-white">
+        <div className="relative overflow-hidden bg-[#ff6a1f] px-4 pb-2 pt-2 text-white">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-end gap-2">
-              <div>
-                <div className="text-[11px] font-semibold line-through opacity-80">
-                  De R$ {product.originalPrice.toLocaleString("pt-BR", {
+            <div>
+              <div className="flex items-end gap-1">
+                <span className="mb-1 rounded bg-white px-1.5 py-0.5 text-[10px] font-extrabold text-[#fe2c55]">
+                  -{product.discountPercent}%
+                </span>
+                <span className="mb-1 text-xs font-bold">R$</span>
+                <span className="text-[28px] font-extrabold leading-none">
+                  {product.price.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
-                </div>
-                <div className="flex items-end gap-1">
-                  <span className="mb-1 text-xs font-bold">R$</span>
-                  <span className="text-[28px] font-extrabold leading-none">
-                    {product.price.toLocaleString("pt-BR", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </div>
+                </span>
+                <Ticket className="mb-1 h-3.5 w-3.5 -rotate-12" />
+              </div>
+              <div className="mt-1 text-[11px] text-white/90 line-through">
+                {money(product.originalPrice)}
               </div>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-1 text-[13px] font-extrabold">
                 <Zap className="h-3.5 w-3.5 fill-white" />
-                Oferta do produto
+                Oferta Relâmpago
               </div>
-              <div className="mt-1 text-[11px] font-semibold">Drift Trike Elétrico 350W</div>
+              <div className="mt-1 text-[11px] font-semibold tabular-nums">
+                Termina em: {hhmmss(remaining)}
+              </div>
             </div>
           </div>
         </div>
@@ -184,12 +201,13 @@ export function DriftProductPage() {
               <Truck className="mt-0.5 h-4 w-4" />
               <div className="text-[13px]">
                 <div>
-                  <span className="rounded bg-[#f1f1f2] px-2 py-1 text-[11px] font-extrabold text-[#161823]">
-                    Consulte o frete
-                  </span>
+                  <span className="rounded bg-[#e7f7f5] px-2 py-1 text-[11px] font-extrabold text-[#00a99d]">
+                    Frete grátis
+                  </span>{" "}
+                  <span className="line-through">{money(product.shipping)}</span>
                 </div>
                 <div className="mt-1 font-extrabold">
-                  {deliveryWindow || "Informe seu endereço para calcular o prazo"}
+                  {deliveryWindow}
                 </div>
               </div>
             </div>
@@ -240,6 +258,31 @@ export function DriftProductPage() {
               ))}
             </div>
           </button>
+        </div>
+
+        <div className="mt-2 bg-white px-4 pt-3">
+          <div className="mb-2 text-[15px] font-semibold">
+            Vídeos de criadores ({creatorVideos.length})
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {creatorVideos.map((video) => (
+              <div
+                key={video.id}
+                className="relative aspect-[9/13] w-[118px] shrink-0 overflow-hidden rounded-lg bg-black"
+              >
+                <iframe
+                  title={`Vídeo de criador ${video.id}`}
+                  src={`https://www.tiktok.com/player/v1/${video.id}?description=1&music_info=1`}
+                  className="h-full w-full border-0"
+                  loading="lazy"
+                  allow="fullscreen"
+                />
+                <span className="pointer-events-none absolute inset-x-1.5 bottom-1.5 rounded bg-black/50 px-1.5 py-1 text-center text-[11px] font-medium text-white">
+                  Assistir vídeo
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="mt-2 bg-white px-4 py-3">
@@ -375,11 +418,19 @@ export function DriftProductPage() {
                       maximumFractionDigits: 2,
                     })}
                   </div>
-                  <div className="text-[28px] font-extrabold text-[#fe2c55]">
-                    R$ {product.price.toLocaleString("pt-BR", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                  <div className="flex items-center gap-1.5">
+                    <span className="rounded-md bg-[#fe2c55] px-1.5 py-[3px] text-[12px] font-extrabold leading-none text-white">
+                      -{product.discountPercent}%
+                    </span>
+                    <span className="text-[28px] font-extrabold text-[#fe2c55]">
+                      {money(product.price)}
+                    </span>
+                  </div>
+                  <div className="mt-1 text-[13px] text-[#8a8b91] line-through">
+                    {money(product.originalPrice)}
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-[#00a99d]">
+                    Frete grátis
                   </div>
                   <div className="mt-2 text-xs font-semibold text-[#5a5b60]">
                     350W · 36V · 3 velocidades
