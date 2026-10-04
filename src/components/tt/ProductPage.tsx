@@ -102,6 +102,7 @@ import {
   money as wapMoney,
   product as wapProduct,
   reviews as wapReviews,
+  wapVoltageOptions,
 } from "@/lib/wap-catalog";
 import {
   getFlashDeadline,
@@ -318,10 +319,6 @@ export function ProductPage({
     },
   ];
   const bermudaSizeOptions = ["38", "40", "42", "44", "46", "48"];
-  const wapVoltageOptions = [
-    { name: "110V", image: wapGallery[0] },
-    { name: "220V", image: wapGallery[0] },
-  ];
   const magnesioFlavorOptions = [
     { name: "Maracujá", image: magnesioColorImages.Maracujá },
     {
@@ -1020,13 +1017,13 @@ export function ProductPage({
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
             {isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
-              ? `Cor (${
-                  isPanela
+              ? `${isWap ? "Voltagem" : "Cor"} (${
+                  isWap
                     ? wapVoltageOptions.length
                     : isPanela
                       ? panelaColorOptions.length
-                    : isTablet2
-                      ? tablet2ColorOptions.length
+                      : isTablet2
+                        ? tablet2ColorOptions.length
                       : isShort
                         ? shortColorOptions.length
                         : isBermuda
@@ -1036,8 +1033,10 @@ export function ProductPage({
               : "(1)"}
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(isPanela
-              ? panelaColorOptions
+            {(isWap
+              ? wapVoltageOptions
+              : isPanela
+                ? panelaColorOptions
               : isTablet2
                 ? tablet2ColorOptions
                 : isTablet

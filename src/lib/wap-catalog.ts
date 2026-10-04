@@ -3,12 +3,18 @@ import wapImage1 from "@/assets/uploads/5587.png";
 import wapImage2 from "@/assets/uploads/5588.png";
 import wapImage3 from "@/assets/uploads/5589.png";
 import wapImage4 from "@/assets/uploads/5590.png";
+import wapVoltageImage from "@/assets/uploads/5601.png";
 import wapReviewImage1 from "@/assets/uploads/5596.png";
 import wapReviewImage2 from "@/assets/uploads/5597.png";
 import wapReviewImage3 from "@/assets/uploads/5599.png";
 import wapReviewImage4 from "@/assets/uploads/5600.png";
 
 export const gallery = [wapImage1, wapImage2, wapImage3, wapImage4];
+
+export const wapVoltageOptions = [
+  { name: "110V", image: wapVoltageImage },
+  { name: "220V", image: wapVoltageImage },
+];
 
 export const descriptionImages = [wapImage1, wapImage2, wapImage3, wapImage2];
 
