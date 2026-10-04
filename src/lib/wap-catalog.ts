@@ -57,8 +57,8 @@ export const product = {
   sold: "1,2 mil",
   variant: "110V",
   store: {
-    name: "WAP",
-    initials: "WAP",
+    name: "TikTok Shop",
+    initials: "TikTok",
     color: "#f59e0b",
     sold: "24.6K vendido(s)",
   },
