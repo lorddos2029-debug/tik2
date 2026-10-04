@@ -22,6 +22,10 @@ const colorOptions = colorImages.map((image, index) => ({
     name: colorNames[index] ?? `Cor ${index + 1}`,
     image,
 }));
+const defaultColor = colorOptions[0] ?? {
+    name: product.variant,
+    image: catalogGallery[0] ?? "/favicon.png",
+};
 const protectionTopics = [
     {
         icon: Package,
@@ -55,10 +59,10 @@ export function RolimaProductPage() {
     const [protectionOpen, setProtectionOpen] = useState(false);
     const [toasts, setToasts] = useState([]);
     const [saved, setSaved] = useState(false);
-    const [selectedColor, setSelectedColor] = useState(colorOptions[0]);
+    const [selectedColor, setSelectedColor] = useState(defaultColor);
     const [showAllReviews, setShowAllReviews] = useState(false);
     const displayedReviews = showAllReviews
-        ? Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length])
+        ? Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]).filter((review) => review !== undefined)
         : reviews;
     const gallery = Array.from(new Set([
         selectedColor.image,

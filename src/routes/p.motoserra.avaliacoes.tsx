@@ -22,7 +22,7 @@ export const Route = createFileRoute("/p/motoserra/avaliacoes")({
 
 function ReviewsPage() {
   const router = useRouter();
-  const all = Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]).filter(
+  const all = Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]!).filter(
     (review): review is (typeof reviews)[number] => review !== undefined,
   );
 
@@ -46,7 +46,7 @@ function ReviewsPage() {
           <div key={`${r.name}-${i}`} className="border-t border-[#f0f0f0] py-4">
             <div className="flex items-center gap-2">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#f1f1f3] text-[12px] font-bold text-[#5a5b60]">
-                {r.name[0]}
+                {r?.name[0]}
               </span>
               <span className="text-[13px] font-semibold">{r.name}</span>
             </div>
