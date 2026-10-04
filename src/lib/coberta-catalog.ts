@@ -1,11 +1,7 @@
-import cobertaImage1 from "@/assets/uploads/coberta-1.png";
-import cobertaImage2 from "@/assets/uploads/coberta-2.png";
-import cobertaImage3 from "@/assets/uploads/coberta-3.png";
-import cobertaImage4 from "@/assets/uploads/coberta-4.png";
-import cobertaImage5 from "@/assets/uploads/coberta-5.png";
-import cobertaImage6 from "@/assets/uploads/coberta-6.png";
-import cobertaImage7 from "@/assets/uploads/coberta-7.png";
-import cobertaImage8 from "@/assets/uploads/coberta-8.png";
+import cobertaImage1 from "@/assets/uploads/5605.png";
+import cobertaImage2 from "@/assets/uploads/5606.png";
+import cobertaImage3 from "@/assets/uploads/5607.png";
+import cobertaImage4 from "@/assets/uploads/5608.png";
 import reviewImage1 from "@/assets/uploads/coberta-review-1.webp";
 import reviewImage2 from "@/assets/uploads/coberta-review-2.webp";
 import reviewImage3 from "@/assets/uploads/coberta-review-3.webp";
@@ -17,10 +13,9 @@ export const colorImages = {
   coracoesVermelho: cobertaImage2,
   floralRosa: cobertaImage3,
   coracoesBege: cobertaImage4,
-  borboletasLilas: cobertaImage5,
-  borboletasBege: cobertaImage6,
-  listradoAzul: cobertaImage7,
-  borboletasMarrom: cobertaImage8,
+  cereja: cobertaImage2,
+  branco: cobertaImage3,
+  verde: cobertaImage4,
 };
 
 export const gallery = [
@@ -28,10 +23,6 @@ export const gallery = [
   cobertaImage2,
   cobertaImage3,
   cobertaImage4,
-  cobertaImage5,
-  cobertaImage6,
-  cobertaImage7,
-  cobertaImage8,
 ];
 
 export const descriptionImages = gallery;

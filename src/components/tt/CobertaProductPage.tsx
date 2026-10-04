@@ -33,21 +33,20 @@ import {
   saveQty,
   saveSelectedProduct,
   saveSelectedVariantImage,
+  saveSelectedVariantLabel,
 } from "@/lib/funnel";
 import { useDeliveryWindow } from "@/hooks/use-delivery-window";
 import { cn } from "@/lib/utils";
 
 const productKey = "coberta" as const;
 const colorOptions = [
-  { name: "Cereja", image: colorImages.cereja },
-  { name: "Corações Vermelho", image: colorImages.coracoesVermelho },
-  { name: "Floral Rosa", image: colorImages.floralRosa },
-  { name: "Corações Bege", image: colorImages.coracoesBege },
-  { name: "Borboletas Lilás", image: colorImages.borboletasLilas },
-  { name: "Borboletas Bege", image: colorImages.borboletasBege },
-  { name: "Listrado Azul", image: colorImages.listradoAzul },
-  { name: "Borboletas Marrom", image: colorImages.borboletasMarrom },
+  { name: "Rosa", image: colorImages.cereja },
+  { name: "Vermelho", image: colorImages.cereja },
+  { name: "Branco", image: colorImages.branco },
+  { name: "Verde", image: colorImages.verde },
 ];
+
+const sizeOptions = ["Casal", "Queen", "King"];
 const defaultColor = colorOptions[0] ?? { name: product.variant, image: gallery[0] ?? "" };
 
 const protectionTopics = [
@@ -65,6 +64,7 @@ export function CobertaProductPage() {
   const [saved, setSaved] = useState(false);
   const [toasts, setToasts] = useState<string[]>([]);
   const [selectedColor, setSelectedColor] = useState(defaultColor);
+  const [selectedSize, setSelectedSize] = useState("Casal");
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [playingCreatorVideo, setPlayingCreatorVideo] = useState<string | null>(null);
 
@@ -78,6 +78,7 @@ export function CobertaProductPage() {
   useEffect(() => {
     setQty(getQty());
     saveSelectedVariantImage(defaultColor.image);
+    saveSelectedVariantLabel(`${defaultColor.name} · Casal`);
     const deadline = getFlashDeadline();
     const tick = () => setRemaining(deadline - Date.now());
     tick();
@@ -246,7 +247,10 @@ export function CobertaProductPage() {
                 className="h-9 w-9 rounded-md object-cover"
               />
               <span className="text-[13px] text-[#5a5b60]">
-                Selecionado: <span className="text-[#161823]">{selectedColor.name}</span>
+                Selecionado:{" "}
+                <span className="text-[#161823]">
+                  {selectedColor.name} · {selectedSize}
+                </span>
               </span>
             </div>
             <ChevronRight className="h-4 w-4 text-[#c8c8cc]" />
@@ -446,7 +450,9 @@ export function CobertaProductPage() {
               className="h-[104px] w-[104px] rounded-lg object-cover"
             />
             <div>
-              <div className="text-[28px] font-extrabold text-[#fe2c55]">R$ 59<span className="text-lg">,90</span></div>
+              <div className="text-[28px] font-extrabold text-[#fe2c55]">
+                {money(product.price)}
+              </div>
               <div className="text-[13px] text-[#8a8b91] line-through">{money(product.originalPrice)}</div>
               <div className="mt-2 text-xs font-extrabold text-[#00b8a9]">Frete grátis</div>
             </div>
@@ -457,7 +463,9 @@ export function CobertaProductPage() {
             <span className="text-xs tabular-nums">Termina em: <b>{hhmmss(remaining)}</b></span>
           </div>
 
-          <div className="mt-3 text-[15px] font-semibold">Cor/Estampa ({colorOptions.length})</div>
+          <div className="mt-3 text-[15px] font-semibold">
+            Cor/Estampa ({colorOptions.length})
+          </div>
           <div className="mt-2 grid grid-cols-2 gap-2">
             {colorOptions.map((option) => (
               <button
@@ -466,7 +474,7 @@ export function CobertaProductPage() {
                 onClick={() => {
                   setSelectedColor(option);
                   saveSelectedVariantImage(option.image);
-                  setVariantOpen(false);
+                  saveSelectedVariantLabel(`${option.name} · ${selectedSize}`);
                   setSlide(1);
                   scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
                   setSlide(1);
@@ -490,6 +498,30 @@ export function CobertaProductPage() {
                 <div className="px-1 py-2 text-center text-[13px] font-semibold">{option.name}</div>
               </button>
             ))}
+          </div>
+
+          <div className="mt-4">
+            <div className="text-[15px] font-semibold">Tamanho</div>
+            <div className="mt-2 flex gap-2">
+              {sizeOptions.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => {
+                    setSelectedSize(size);
+                    saveSelectedVariantLabel(`${selectedColor.name} · ${size}`);
+                  }}
+                  className={cn(
+                    "min-w-[72px] rounded-md border px-3 py-2 text-[14px] font-semibold",
+                    selectedSize === size
+                      ? "border-[#fe2c55] bg-[#fff0f3] text-[#fe2c55]"
+                      : "border-[#e5e5e7] text-[#161823]",
+                  )}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="mt-4 flex items-center justify-between">
