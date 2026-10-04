@@ -15,6 +15,7 @@ import { Route as BermudaRouteImport } from './routes/bermuda'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CobertaRouteImport } from './routes/coberta'
+import { Route as DriftRouteImport } from './routes/drift'
 import { Route as EnderecoRouteImport } from './routes/endereco'
 import { Route as FerramentasRouteImport } from './routes/ferramentas'
 import { Route as FornoRouteImport } from './routes/forno'
@@ -60,6 +61,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const CobertaRoute = CobertaRouteImport.update({
   id: '/coberta',
   path: '/coberta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DriftRoute = DriftRouteImport.update({
+  id: '/drift',
+  path: '/drift',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnderecoRoute = EnderecoRouteImport.update({
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/carrinho': typeof CarrinhoRoute
   '/checkout': typeof CheckoutRoute
   '/coberta': typeof CobertaRoute
+  '/drift': typeof DriftRoute
   '/endereco': typeof EnderecoRoute
   '/ferramentas': typeof FerramentasRoute
   '/forno': typeof FornoRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/carrinho': typeof CarrinhoRoute
   '/checkout': typeof CheckoutRoute
   '/coberta': typeof CobertaRoute
+  '/drift': typeof DriftRoute
   '/endereco': typeof EnderecoRoute
   '/ferramentas': typeof FerramentasRoute
   '/forno': typeof FornoRoute
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/carrinho': typeof CarrinhoRoute
   '/checkout': typeof CheckoutRoute
   '/coberta': typeof CobertaRoute
+  '/drift': typeof DriftRoute
   '/endereco': typeof EnderecoRoute
   '/ferramentas': typeof FerramentasRoute
   '/forno': typeof FornoRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/checkout'
     | '/coberta'
+    | '/drift'
     | '/endereco'
     | '/ferramentas'
     | '/forno'
@@ -248,6 +258,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/checkout'
     | '/coberta'
+    | '/drift'
     | '/endereco'
     | '/ferramentas'
     | '/forno'
@@ -271,6 +282,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/checkout'
     | '/coberta'
+    | '/drift'
     | '/endereco'
     | '/ferramentas'
     | '/forno'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   CarrinhoRoute: typeof CarrinhoRoute
   CheckoutRoute: typeof CheckoutRoute
   CobertaRoute: typeof CobertaRoute
+  DriftRoute: typeof DriftRoute
   EnderecoRoute: typeof EnderecoRoute
   FerramentasRoute: typeof FerramentasRoute
   FornoRoute: typeof FornoRoute
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/coberta'
       fullPath: '/coberta'
       preLoaderRoute: typeof CobertaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/drift': {
+      id: '/drift'
+      path: '/drift'
+      fullPath: '/drift'
+      preLoaderRoute: typeof DriftRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/endereco': {
@@ -493,6 +513,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarrinhoRoute: CarrinhoRoute,
   CheckoutRoute: CheckoutRoute,
   CobertaRoute: CobertaRoute,
+  DriftRoute: DriftRoute,
   EnderecoRoute: EnderecoRoute,
   FerramentasRoute: FerramentasRoute,
   FornoRoute: FornoRoute,
