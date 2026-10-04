@@ -3,8 +3,17 @@ import driftImage1 from "@/assets/uploads/5578.png";
 import driftImage2 from "@/assets/uploads/5579.png";
 import driftImage3 from "@/assets/uploads/5580.png";
 import driftImage4 from "@/assets/uploads/5581.png";
+import driftColorFogoGelo from "@/assets/uploads/5582.png";
+import driftColorGalaxia from "@/assets/uploads/5583.png";
+import driftColorCoracoes from "@/assets/uploads/5584.png";
+import driftColorPreto from "@/assets/uploads/5585.png";
 
-export const colorImages = { fogoGelo: driftImage1 };
+export const colorImages = {
+  fogoGelo: driftColorFogoGelo,
+  galaxia: driftColorGalaxia,
+  coracoes: driftColorCoracoes,
+  preto: driftColorPreto,
+};
 export const gallery = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const descriptionImages = [driftImage1, driftImage2, driftImage3, driftImage4];
 export const creatorVideos = [

@@ -39,7 +39,12 @@ import { formatDeliveryWindow, useDeliveryWindow } from "@/hooks/use-delivery-wi
 import { cn } from "@/lib/utils";
 
 const productKey = "drift" as const;
-const modelOptions = [{ name: "Fogo & Gelo", image: colorImages.fogoGelo }];
+const modelOptions = [
+  { name: "Fogo & Gelo", image: colorImages.fogoGelo },
+  { name: "Galáxia Rosa", image: colorImages.galaxia },
+  { name: "Corações", image: colorImages.coracoes },
+  { name: "Preto", image: colorImages.preto },
+];
 const defaultModel = modelOptions[0] ?? { name: product.variant, image: gallery[0] ?? "" };
 
 const protectionTopics = [
@@ -69,10 +74,7 @@ export function DriftProductPage() {
       )
     : reviews;
 
-  const selectedGallery = [
-    selectedModel.image,
-    ...gallery.filter((image) => image !== selectedModel.image),
-  ];
+  const selectedGallery = gallery;
 
   useEffect(() => {
     setQty(getQty());
@@ -484,8 +486,6 @@ export function DriftProductPage() {
                   setSelectedModel(option);
                   saveSelectedVariantImage(option.image);
                   setVariantOpen(false);
-                  setSlide(1);
-                  scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
                 }}
                 className={cn(
                   "overflow-hidden rounded-lg border-2 text-left",
@@ -494,7 +494,7 @@ export function DriftProductPage() {
               >
                 <img
                   src={option.image}
-                  alt={option.name}
+                  alt={`Modelo ${option.name}`}
                   className="aspect-square w-full object-cover"
                 />
                 <div className="px-1 py-2 text-center text-[13px] font-semibold">{option.name}</div>
