@@ -3,6 +3,10 @@ import wapImage1 from "@/assets/uploads/5587.png";
 import wapImage2 from "@/assets/uploads/5588.png";
 import wapImage3 from "@/assets/uploads/5589.png";
 import wapImage4 from "@/assets/uploads/5590.png";
+import wapReviewImage1 from "@/assets/uploads/5596.png";
+import wapReviewImage2 from "@/assets/uploads/5597.png";
+import wapReviewImage3 from "@/assets/uploads/5599.png";
+import wapReviewImage4 from "@/assets/uploads/5600.png";
 
 export const gallery = [wapImage1, wapImage2, wapImage3, wapImage4];
 
@@ -16,28 +20,28 @@ export const reviews: Review[] = [
     stars: 5,
     variant: "110V",
     text: "Lavadora compacta, potente e muito prática para lavar o carro e a calçada.",
-    photos: [],
+    photos: [wapReviewImage1],
   },
   {
     name: "M****a R.",
     stars: 5,
     variant: "220V",
     text: "Chegou bem embalada e acompanha os acessórios necessários para começar a usar.",
-    photos: [],
+    photos: [wapReviewImage2],
   },
   {
     name: "A****o P.",
     stars: 5,
     variant: "110V",
     text: "A pressão é excelente para limpeza do quintal. O jato regulável ajuda bastante.",
-    photos: [],
+    photos: [wapReviewImage3],
   },
   {
     name: "C****a F.",
     stars: 4,
     variant: "220V",
     text: "Produto fácil de montar, ocupa pouco espaço e funciona muito bem.",
-    photos: [],
+    photos: [wapReviewImage4],
   },
 ];
 
