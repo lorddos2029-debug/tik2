@@ -1085,6 +1085,7 @@ export function ProductPage({
                     (isPanela && selectedPanelaColor.name === option.name) ||
                     (isTablet && selectedTabletColor.name === option.name) ||
                     (isTablet2 && selectedTablet2Color.name === option.name) ||
+                    (isWap && selectedWapVoltage.name === option.name) ||
                     (isShort && selectedShortColor.name === option.name) ||
                     (isBermuda && selectedBermudaColor.name === option.name) ||
                     (isMagnesio && selectedMagnesioFlavor.name === option.name)
