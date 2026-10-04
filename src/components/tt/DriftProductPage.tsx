@@ -48,8 +48,26 @@ const modelOptions = [
 const defaultModel = modelOptions[0] ?? { name: product.variant, image: gallery[0] ?? "" };
 
 const protectionTopics = [
-  ["Pagamento seguro", "Suas informações de pagamento são protegidas durante o processo de compra."],
-  ["Acompanhamento do pedido", "Após a compra, acompanhe as informações disponíveis sobre o envio do pedido."],
+  {
+    icon: Package,
+    title: "Devoluções gratuitas em 30 dias",
+    text: "Devolução gratuita em até 30 dias após o recebimento do seu produto. Os Termos e Condições se aplicam.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Pagamento seguro",
+    text: "O TikTok Shop não vende, aluga ou cede suas informações pessoais a terceiros para fins de marketing.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Reembolso se algo der errado",
+    text: "Se o seu pedido for perdido ou danificado durante o transporte antes de chegar, reembolsaremos automaticamente o seu dinheiro. Você não precisa fazer nada.",
+  },
+  {
+    icon: Truck,
+    title: "Se o seu pedido não for enviado no prazo",
+    text: "Você não precisa fazer nada. Se ele não for despachado em até 7 dias úteis, cancelaremos o seu pedido e reembolsaremos automaticamente o seu dinheiro.",
+  },
 ];
 
 export function DriftProductPage() {
@@ -266,13 +284,24 @@ export function DriftProductPage() {
               </span>
               <ChevronRight className="h-4 w-4 text-[#c8c8cc]" />
             </div>
-            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 pl-5 text-[12px]">
-              {["Pagamento seguro", "Acompanhamento do pedido"].map((item) => (
-                <span key={item} className="flex items-center gap-1">
-                  <Check className="h-3 w-3 text-[#8a5a1e]" />
-                  {item}
-                </span>
-              ))}
+            <div className="mt-[4px] overflow-x-auto scroll-smooth pl-[21px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex flex-col gap-y-[2px] text-[12.5px] font-normal leading-[1.25] text-[#161823]">
+                {[
+                  ["Devolução gratuita", "Reembolso se algo der errado"],
+                  ["Pagamento seguro", "Se o seu pedido não for enviado no prazo"],
+                ].map((row) => (
+                  <div key={row[0]} className="flex gap-x-4">
+                    <span className="flex w-[128px] shrink-0 items-start gap-[4px]">
+                      <Check className="mt-[2px] h-[12px] w-[12px] shrink-0 text-[#8a5a1e]" strokeWidth={2.75} />
+                      <span className="whitespace-nowrap leading-[1.25]">{row[0]}</span>
+                    </span>
+                    <span className="flex shrink-0 items-start gap-[4px]">
+                      <Check className="mt-[2px] h-[12px] w-[12px] shrink-0 text-[#8a5a1e]" strokeWidth={2.75} />
+                      <span className="whitespace-nowrap leading-[1.25]">{row[1]}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </button>
         </div>
@@ -548,13 +577,13 @@ export function DriftProductPage() {
         onClose={() => setProtectionOpen(false)}
       >
         <div className="px-1 py-2">
-          {protectionTopics.map(([title, text]) => (
+          {protectionTopics.map(({ icon: Icon, title, text }) => (
             <section key={title} className="mb-5">
               <div className="flex items-center gap-2 text-[#8a5a1e]">
-                <ShieldCheck className="h-5 w-5" />
+                <Icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
                 <h3 className="text-[15px] font-bold">{title}</h3>
               </div>
-              <p className="mt-2 text-[13px] leading-[1.5]">{text}</p>
+              <p className="mt-2 text-[13px] leading-[1.5] text-[#161823]">{text}</p>
             </section>
           ))}
         </div>
