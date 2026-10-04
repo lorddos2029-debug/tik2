@@ -22,6 +22,8 @@ export function useDeliveryWindow(): string {
 
   useEffect(() => {
     const update = () => setDeliveryWindow(formatDeliveryWindow(new Date()));
+    update();
+
     const intervalId = window.setInterval(update, 60_000);
 
     return () => window.clearInterval(intervalId);

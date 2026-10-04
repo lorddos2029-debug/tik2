@@ -35,7 +35,7 @@ import {
   saveSelectedProduct,
   saveSelectedVariantImage,
 } from "@/lib/funnel";
-import { useDeliveryWindow } from "@/hooks/use-delivery-window";
+import { formatDeliveryWindow, useDeliveryWindow } from "@/hooks/use-delivery-window";
 import { cn } from "@/lib/utils";
 
 const productKey = "drift" as const;
@@ -49,6 +49,9 @@ const protectionTopics = [
 
 export function DriftProductPage() {
   const deliveryWindow = useDeliveryWindow();
+  const deliveryText = deliveryWindow.startsWith("Calculando")
+    ? formatDeliveryWindow(new Date())
+    : deliveryWindow;
   const [slide, setSlide] = useState(1);
   const [remaining, setRemaining] = useState(0);
   const [qty, setQty] = useState(1);
@@ -146,8 +149,9 @@ export function DriftProductPage() {
                 </span>
                 <Ticket className="mb-1 h-3.5 w-3.5 -rotate-12" />
               </div>
-              <div className="mt-1 text-[11px] text-white/90 line-through">
-                {money(product.originalPrice)}
+              <div className="mt-1 flex items-center gap-1 text-[11px] text-white/90">
+                <span>De</span>
+                <span className="line-through">{money(product.originalPrice)}</span>
               </div>
             </div>
             <div className="text-right">
@@ -207,7 +211,7 @@ export function DriftProductPage() {
                   <span className="line-through">{money(product.shipping)}</span>
                 </div>
                 <div className="mt-1 font-extrabold">
-                  {deliveryWindow}
+                  {deliveryText}
                 </div>
               </div>
             </div>
@@ -261,8 +265,11 @@ export function DriftProductPage() {
         </div>
 
         <div className="mt-2 bg-white px-4 pt-3">
-          <div className="mb-2 text-[15px] font-semibold">
-            Vídeos de criadores ({creatorVideos.length})
+          <div className="mb-2 flex items-center justify-between text-[15px] font-semibold">
+            <span>Vídeos de criadores</span>
+            <span className="text-[12px] font-normal text-[#5a5b60]">
+              {creatorVideos.length} vídeos
+            </span>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {creatorVideos.map((video) => (
