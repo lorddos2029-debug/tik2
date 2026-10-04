@@ -60,7 +60,14 @@ export function DriftProductPage() {
   const [saved, setSaved] = useState(false);
   const [toasts, setToasts] = useState<string[]>([]);
   const [selectedModel, setSelectedModel] = useState(defaultModel);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const displayedReviews = showAllReviews
+    ? Array.from({ length: 60 }, (_, index) => reviews[index % reviews.length]).filter(
+        (review): review is (typeof reviews)[number] => review !== undefined,
+      )
+    : reviews;
 
   const selectedGallery = [
     selectedModel.image,
@@ -294,29 +301,41 @@ export function DriftProductPage() {
 
         <div className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center gap-1.5 text-[14px] font-semibold">
-            <Star className="h-4 w-4 fill-[#f59e0b] text-[#f59e0b]" />
+            <Star className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+            {product.rating}
+            <span className="mx-1 text-[#d0d0d3]">|</span>
             Avaliações dos clientes ({reviews.length})
+            <Info className="h-3.5 w-3.5 text-[#8a8b91]" />
           </div>
-          <div className="mt-3 space-y-3">
-            {reviews.map((review) => (
-              <article
-                key={review.name}
-                className="rounded-lg bg-[#f7f7f8] px-3 py-3 text-[13px] leading-[1.45]"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-bold">{review.name}</span>
-                  <span className="text-[11px] text-[#5a5b60]">{review.date}</span>
+
+          {displayedReviews.map((review, index) => (
+            <div key={`${review.name}-${index}`} className="mt-4 flex items-start gap-3">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f1f1f3] text-xs font-bold">
+                {review.name[0]}
+              </span>
+
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-semibold">{review.name}</div>
+                <div className="mt-1 text-xs">
+                  <span className="text-[#f2b900]">{"★".repeat(review.stars)}</span>
+                  <span className="text-[#d9d9dc]">{"★".repeat(5 - review.stars)}</span>
+                  <span className="ml-2 text-[#5a5b60]">· Compra verificada</span>
                 </div>
-                <div className="mt-1 text-[11px] text-[#f59e0b]">
-                  {"★".repeat(review.stars)}
-                </div>
-                <p className="mt-1 text-[#5a5b60]">{review.text}</p>
-                <div className="mt-1 text-[11px] font-semibold text-[#00a99d]">
-                  Compra verificada
-                </div>
-              </article>
-            ))}
-          </div>
+                <div className="mt-1 text-[14px]">{review.text}</div>
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() => setShowAllReviews((value) => !value)}
+            className="mt-4 flex w-full items-center justify-center gap-1 rounded-full border border-[#e5e5e7] py-2.5 text-[13.5px] font-semibold text-[#161823]"
+          >
+            {showAllReviews
+              ? "Ocultar avaliações"
+              : `Ver todas as ${reviews.length} avaliações`}
+            <ChevronRight aria-hidden="true" className="h-4 w-4" />
+          </button>
         </div>
 
         <div className="mt-2 bg-white px-4 py-3">
