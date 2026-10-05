@@ -7,6 +7,10 @@ import driftColorFogoGelo from "@/assets/uploads/5582.png";
 import driftColorGalaxia from "@/assets/uploads/5583.png";
 import driftColorCoracoes from "@/assets/uploads/5584.png";
 import driftColorPreto from "@/assets/uploads/5585.png";
+import driftReviewImage1 from "@/assets/uploads/5631.png";
+import driftReviewImage2 from "@/assets/uploads/5632.png";
+import driftReviewImage3 from "@/assets/uploads/5633.png";
+import driftReviewImage4 from "@/assets/uploads/5634.png";
 
 export const colorImages = {
   fogoGelo: driftColorFogoGelo,
@@ -37,7 +41,7 @@ export const reviews: Review[] = [
     stars: 5,
     variant: "Fogo & Gelo",
     text: "O drift trike é muito divertido e as rodas traseiras giram de verdade. As três velocidades ajudam bastante no controle.",
-    photos: [],
+    photos: [driftReviewImage1],
     verified: true,
     country: "Brasil",
     date: "há 2 dias",
@@ -47,7 +51,7 @@ export const reviews: Review[] = [
     stars: 5,
     variant: "Fogo & Gelo",
     text: "Chegou bem embalado e meu filho adorou. A montagem foi simples e o acabamento é muito bonito.",
-    photos: [],
+    photos: [driftReviewImage2],
     verified: true,
     country: "Brasil",
     date: "há 5 dias",
@@ -57,7 +61,7 @@ export const reviews: Review[] = [
     stars: 4,
     variant: "Fogo & Gelo",
     text: "Produto potente e estável. O seletor de velocidade e o display de bateria são muito úteis.",
-    photos: [],
+    photos: [driftReviewImage3],
     verified: true,
     country: "Brasil",
     date: "há 1 semana",
@@ -67,7 +71,7 @@ export const reviews: Review[] = [
     stars: 5,
     variant: "Galáxia Rosa",
     text: "O produto é lindo e muito divertido. A bateria dura bastante e as rodas fazem o drift com facilidade.",
-    photos: [],
+    photos: [driftReviewImage4],
     verified: true,
     country: "Brasil",
     date: "há 1 semana",

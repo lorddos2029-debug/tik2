@@ -357,6 +357,18 @@ export function DriftProductPage() {
                   <span className="ml-2 text-[#5a5b60]">· Compra verificada</span>
                 </div>
                 <div className="mt-1 text-[14px]">{review.text}</div>
+                {review.photos.length > 0 && (
+                  <div className="mt-2 flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    {review.photos.map((photo, photoIndex) => (
+                      <img
+                        key={`${photo}-${photoIndex}`}
+                        src={photo}
+                        alt={`Foto da avaliação de ${review.name}`}
+                        className="h-24 w-24 shrink-0 rounded-md object-cover"
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
