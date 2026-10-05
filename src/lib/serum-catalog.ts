@@ -2,6 +2,10 @@ import serumImage1 from "@/assets/uploads/5636.png";
 import serumImage2 from "@/assets/uploads/5637.png";
 import serumDescription1 from "@/assets/uploads/5638.png";
 import serumDescription2 from "@/assets/uploads/5640.png";
+import serumReviewImage1 from "@/assets/uploads/5641.png";
+import serumReviewImage2 from "@/assets/uploads/5642.png";
+import serumReviewImage3 from "@/assets/uploads/5643.png";
+import serumReviewImage4 from "@/assets/uploads/5644.png";
 
 export const gallery = [serumImage1, serumImage2];
 
@@ -18,28 +22,28 @@ export const reviews = [
     stars: 5,
     variant: "30ml",
     text: "A textura é leve e deixa a pele muito hidratada. Gostei bastante do resultado.",
-    photos: [serumImage2],
+    photos: [serumReviewImage1],
   },
   {
     name: "C****a R.",
     stars: 5,
     variant: "30ml",
     text: "Chegou bem embalado e o sérum tem uma sensação refrescante na pele.",
-    photos: [serumDescription2],
+    photos: [serumReviewImage2],
   },
   {
     name: "M****s S.",
     stars: 4,
     variant: "30ml",
     text: "Estou usando diariamente e minha pele está com aparência mais viçosa.",
-    photos: [],
+    photos: [serumReviewImage3],
   },
   {
     name: "J****o L.",
     stars: 5,
     variant: "30ml",
     text: "Produto bonito, fácil de aplicar e com boa absorção.",
-    photos: [serumImage1],
+    photos: [serumReviewImage4],
   },
 ];
 
