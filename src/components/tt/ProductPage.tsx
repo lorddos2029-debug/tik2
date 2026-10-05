@@ -105,6 +105,14 @@ import {
   wapVoltageOptions,
 } from "@/lib/wap-catalog";
 import {
+  creatorVideos as serumCreatorVideos,
+  descriptionImages as serumDescriptionImages,
+  gallery as serumGallery,
+  money as serumMoney,
+  product as serumProduct,
+  reviews as serumReviews,
+} from "@/lib/serum-catalog";
+import {
   getFlashDeadline,
   getQty,
   hhmmss,
@@ -153,7 +161,8 @@ export function ProductPage({
     | "short"
     | "bermuda"
     | "magnesio"
-    | "wap";
+    | "wap"
+    | "serum";
 }) {
   const isFerramentas = productKey === "ferramentas";
   const isPanela = productKey === "panela";
@@ -164,7 +173,10 @@ export function ProductPage({
   const isBermuda = productKey === "bermuda";
   const isMagnesio = productKey === "magnesio";
   const isWap = productKey === "wap";
-  const gallery = isWap
+  const isSerum = productKey === "serum";
+  const gallery = isSerum
+    ? serumGallery
+    : isWap
     ? wapGallery
     : isMagnesio
     ? magnesioGallery
@@ -183,8 +195,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasGallery
           : chainsawGallery;
-  const descriptionImages = isWap
-    ? wapDescriptionImages
+  const descriptionImages = isSerum
+    ? serumDescriptionImages
+    : isWap
+      ? wapDescriptionImages
     : isMagnesio
     ? magnesioDescriptionImages
     : isBermuda
@@ -202,8 +216,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasDescriptionImages
           : chainsawDescriptionImages;
-  const creatorVideos = isWap
-    ? wapCreatorVideos
+  const creatorVideos = isSerum
+    ? serumCreatorVideos
+    : isWap
+      ? wapCreatorVideos
     : isMagnesio
     ? magnesioCreatorVideos
     : isBermuda
@@ -221,8 +237,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasCreatorVideos
           : chainsawCreatorVideos;
-  const product = isWap
-    ? wapProduct
+  const product = isSerum
+    ? serumProduct
+    : isWap
+      ? wapProduct
     : isMagnesio
     ? magnesioProduct
     : isBermuda
@@ -240,8 +258,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasProduct
           : chainsawProduct;
-  const reviews = isWap
-    ? wapReviews
+  const reviews = isSerum
+    ? serumReviews
+    : isWap
+      ? wapReviews
     : isMagnesio
     ? magnesioReviews
     : isBermuda
@@ -259,8 +279,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasReviews
           : chainsawReviews;
-  const money = isWap
-    ? wapMoney
+  const money = isSerum
+    ? serumMoney
+    : isWap
+      ? wapMoney
     : isMagnesio
     ? magnesioMoney
     : isBermuda

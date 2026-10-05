@@ -13,6 +13,7 @@ import { gallery as bermudaGallery, product as bermudaProduct } from "@/lib/berm
 import { gallery as magnesioGallery, product as magnesioProduct } from "@/lib/magnesio-catalog";
 import { gallery as driftGallery, product as driftProduct } from "@/lib/drift-catalog";
 import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog";
+import { gallery as serumGallery, product as serumProduct } from "@/lib/serum-catalog";
 
 export type ProductKey =
   | "motoserra"
@@ -29,7 +30,8 @@ export type ProductKey =
   | "bermuda"
   | "magnesio"
   | "drift"
-  | "wap";
+  | "wap"
+  | "serum";
 
 export interface CheckoutProduct {
   key: ProductKey;
@@ -65,6 +67,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  serum: {
+    key: "serum",
+    id: "ghk-zencial-envy-skin-serum-30ml",
+    pagePath: "/serum",
+    title: serumProduct.titleShort,
+    image: firstImage(serumGallery),
+    price: serumProduct.price,
+    originalPrice: serumProduct.originalPrice,
+    discountPercent: serumProduct.discountPercent,
+    shipping: serumProduct.shipping,
+    rating: serumProduct.rating,
+    variant: serumProduct.variant,
+    storeName: serumProduct.store.name,
+  },
   wap: {
     key: "wap",
     id: "lavadora-wap-agil-1800-1300psi",
@@ -294,4 +310,5 @@ export const isProductKey = (value: unknown): value is ProductKey =>
   value === "bermuda" ||
   value === "magnesio" ||
   value === "drift" ||
-  value === "wap";
+  value === "wap" ||
+  value === "serum";
