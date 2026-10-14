@@ -3,19 +3,19 @@ export const gallery = Array.from({ length: 8 }, (_, i) => `/products/camera/cam
 export const descriptionImages = [...gallery];
 export const creatorVideos: Array<{ poster: string; src: string; embedUrl: string; href: string }> = [
   {
-    poster: gallery[0],
+    poster: "/products/camera/camera-1.webp",
     src: "",
     embedUrl: "https://www.tiktok.com/player/v1/7695402661847305492",
     href: "https://www.tiktok.com/@vanessadantask/video/7695402661847305492",
   },
   {
-    poster: gallery[0],
+    poster: "/products/camera/camera-1.webp",
     src: "",
     embedUrl: "https://www.tiktok.com/player/v1/7695426729971682580",
     href: "https://www.tiktok.com/@rodrigoarantespro/video/7695426729971682580",
   },
   {
-    poster: gallery[0],
+    poster: "/products/camera/camera-1.webp",
     src: "",
     embedUrl: "https://www.tiktok.com/player/v1/7695426729971682580",
     href: "https://www.tiktok.com/@rodrigoarantespro/video/7695426729971682580",
