@@ -886,7 +886,7 @@ export function ProductPage({
         <div ref={reviewsRef} className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-[14px]">
-              {!isCamera && !isRelogio && (!isWhey || reviews.length > 0) && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+              {!isCamera && (!isWhey || reviews.length > 0) && (!isRelogio || reviews.length > 0) && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
               <b>{product.rating}</b>
               <span className="mx-1 text-[#d0d0d3]">|</span></>)}
               <span className="font-semibold">Avaliações dos clientes ({product.ratingCount})</span>
