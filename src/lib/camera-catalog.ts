@@ -1,4 +1,10 @@
 /** Dados da câmera Jortan enviados pelo anunciante. Não inventar avaliações ou descontos. */
+export const colorImages = {
+  Branca: "/products/camera/cor-branca.webp",
+  Preta: "/products/camera/cor-preta.webp",
+  Rosa: "/products/camera/cor-rosa.webp",
+} as const;
+
 export const gallery = Array.from({ length: 8 }, (_, i) => `/products/camera/camera-${i + 1}.webp`);
 export const descriptionImages = [...gallery];
 export const creatorVideos: Array<{ poster: string; src: string; embedUrl: string; href: string }> = [
