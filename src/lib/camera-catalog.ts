@@ -40,7 +40,7 @@ export const product = {
   store: {
     name: "TikTok",
     initials: "TikTok",
-    color: "#19865f",
+    color: "#000000",
     sold: "24.312 vendidos",
   },
   specs: [
