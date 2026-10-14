@@ -1,3 +1,4 @@
+import { flavorImages as wheyFlavorImages, product as wheyProduct } from "@/lib/whey-catalog";
 import { colorImages as cameraColorImages, product as cameraProduct } from "@/lib/camera-catalog";
 import { gallery as chainsawGallery, product as chainsawProduct } from "@/lib/catalog";
 import { gallery as pillowGallery, product as pillowProduct } from "@/lib/pillow-catalog";
@@ -17,6 +18,7 @@ import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog"
 import { gallery as serumGallery, product as serumProduct } from "@/lib/serum-catalog";
 
 export type ProductKey =
+  | "whey"
   | "camera"
   | "motoserra"
   | "travesseiro"
@@ -39,6 +41,7 @@ export interface CheckoutProduct {
   key: ProductKey;
   id: string;
   pagePath:
+    | "/whey"
     | "/camera"
     | "/p/motoserra"
     | "/travesseiro"
@@ -70,6 +73,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  whey: {
+    key: "whey",
+    id: "basic-whey-protein-1kg",
+    pagePath: "/whey",
+    title: wheyProduct.titleShort,
+    image: wheyFlavorImages.Natural,
+    price: wheyProduct.price,
+    originalPrice: wheyProduct.originalPrice,
+    discountPercent: wheyProduct.discountPercent,
+    shipping: wheyProduct.shipping,
+    rating: wheyProduct.rating,
+    variant: wheyProduct.variant,
+    storeName: wheyProduct.store.name,
+  },
   camera: {
     key: "camera",
     id: "camera-seguranca-wifi-jortan-360-full-hd",
@@ -313,6 +330,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
 export const defaultCheckoutProduct = checkoutProducts.motoserra;
 
 export const isProductKey = (value: unknown): value is ProductKey =>
+  value === "whey" ||
   value === "camera" ||
   value === "motoserra" ||
   value === "travesseiro" ||
