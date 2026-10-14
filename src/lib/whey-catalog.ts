@@ -33,10 +33,10 @@ export const product = {
   sold: "—",
   variant: "Natural",
   store: {
-    name: "Loja de Suplementos",
-    initials: "WHEY",
+    name: "TikTok",
+    initials: "TikTok",
     color: "#161823",
-    sold: "Basic Whey Protein 1Kg",
+    sold: "24.312 vendidos",
   },
   specs: [
     "Suplemento alimentar de proteína em pó.",
