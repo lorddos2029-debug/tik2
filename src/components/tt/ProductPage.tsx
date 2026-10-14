@@ -18,6 +18,14 @@ import { useEffect, useRef, useState } from "react";
 import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
+  gallery as cameraGallery,
+  descriptionImages as cameraDescriptionImages,
+  creatorVideos as cameraCreatorVideos,
+  money as cameraMoney,
+  product as cameraProduct,
+  reviews as cameraReviews,
+} from "@/lib/camera-catalog";
+import {
   creatorVideos as chainsawCreatorVideos,
   descriptionImages as chainsawDescriptionImages,
   gallery as chainsawGallery,
@@ -153,6 +161,7 @@ export function ProductPage({
 }: {
   productKey?:
     | "motoserra"
+    | "camera"
     | "ferramentas"
     | "panela"
     | "forno"
@@ -164,6 +173,7 @@ export function ProductPage({
     | "wap"
     | "serum";
 }) {
+  const isCamera = productKey === "camera";
   const isFerramentas = productKey === "ferramentas";
   const isPanela = productKey === "panela";
   const isForno = productKey === "forno";
@@ -174,7 +184,7 @@ export function ProductPage({
   const isMagnesio = productKey === "magnesio";
   const isWap = productKey === "wap";
   const isSerum = productKey === "serum";
-  const gallery = isSerum
+  const gallery = isCamera ? cameraGallery : isSerum
     ? serumGallery
     : isWap
     ? wapGallery
@@ -195,7 +205,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasGallery
           : chainsawGallery;
-  const descriptionImages = isSerum
+  const descriptionImages = isCamera ? cameraDescriptionImages : isSerum
     ? serumDescriptionImages
     : isWap
       ? wapDescriptionImages
@@ -216,7 +226,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasDescriptionImages
           : chainsawDescriptionImages;
-  const creatorVideos = isSerum
+  const creatorVideos = isCamera ? cameraCreatorVideos : isSerum
     ? serumCreatorVideos
     : isWap
       ? wapCreatorVideos
@@ -237,7 +247,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasCreatorVideos
           : chainsawCreatorVideos;
-  const product = isSerum
+  const product = isCamera ? cameraProduct : isSerum
     ? serumProduct
     : isWap
       ? wapProduct
@@ -258,7 +268,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasProduct
           : chainsawProduct;
-  const reviews = isSerum
+  const reviews = isCamera ? cameraReviews : isSerum
     ? serumReviews
     : isWap
       ? wapReviews
@@ -279,7 +289,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasReviews
           : chainsawReviews;
-  const money = isSerum
+  const money = isCamera ? cameraMoney : isSerum
     ? serumMoney
     : isWap
       ? wapMoney
@@ -537,12 +547,12 @@ export function ProductPage({
             <div className="relative flex items-center justify-between gap-3">
               <div className="flex flex-col">
                 <div className="flex items-end gap-1">
-                  <span className="mb-[5px] rounded-[4px] bg-white px-[5px] py-[2px] text-[10px] font-extrabold leading-none text-[#fe2c55]">
+                  {!isCamera && (<span className="mb-[5px] rounded-[4px] bg-white px-[5px] py-[2px] text-[10px] font-extrabold leading-none text-[#fe2c55]">
                     -{product.discountPercent}%
-                  </span>
+                  </span>)}
                   <span className="mb-[5px] text-[12px] font-bold leading-none">R$</span>
                   <span className="text-[28px] font-extrabold leading-[0.85] tracking-[-0.02em]">
-                    {money(product.price)}
+                    {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                   </span>
                   <Ticket
                     aria-hidden="true"
@@ -550,18 +560,18 @@ export function ProductPage({
                     strokeWidth={2.2}
                   />
                 </div>
-                <span className="mt-[4px] text-[12px] font-normal text-white/90 line-through">
+                {!isCamera && (<span className="mt-[4px] text-[12px] font-normal text-white/90 line-through">
                   {money(product.originalPrice)}
-                </span>
+                </span>)}
               </div>
               <div className="shrink-0 pr-0.5 text-right">
                 <div className="flex items-center justify-end gap-1 whitespace-nowrap text-[13px] font-extrabold leading-none">
                   <Zap aria-hidden="true" className="h-[13px] w-[13px] fill-white text-white" strokeWidth={0} />
-                  Oferta Relâmpago
+                  {isCamera ? "Câmera Jortan" : "Oferta Relâmpago"}
                 </div>
-                <div className="mt-1.5 whitespace-nowrap text-[11px] font-semibold leading-none tabular-nums text-white">
+                {!isCamera && (<div className="mt-1.5 whitespace-nowrap text-[11px] font-semibold leading-none tabular-nums text-white">
                   Termina em: {countdown}
-                </div>
+                </div>)}
               </div>
             </div>
           </div>
@@ -583,20 +593,20 @@ export function ProductPage({
             </div>
           </div>
 
-          <div className="bg-white px-4 py-[7px]">
+          {!isCamera && (<div className="bg-white px-4 py-[7px]">
             <div className="flex min-w-0 items-center gap-[5px] text-[12px] font-extrabold leading-none text-[#d62955]">
               <Ticket aria-hidden="true" className="h-[13px] w-[13px] shrink-0 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               <span className="min-w-0 flex-1 truncate">
                 Desconto máximo de {money(product.discountValue)} aplicado
               </span>
             </div>
-          </div>
+          </div>)}
 
           <div className="bg-white px-4 pb-2 pt-1.5">
             <div className="flex items-start justify-between gap-3">
               <h1 className="cursor-pointer text-[15px] font-bold leading-[1.28] tracking-[-0.005em] text-[#161823]">
                 {product.titleShort}
-                <span className="text-[#161823]">...</span>
+                {!isCamera && <span className="text-[#161823]">...</span>}
               </h1>
               <button
                 aria-label="Salvar"
@@ -616,7 +626,9 @@ export function ProductPage({
                 />
               </button>
             </div>
-            <div className="mt-1 flex items-center gap-1 text-[12px] text-[#5a5b60]">
+            {isCamera ? (
+              <div className="mt-1 text-[12px] text-[#5a5b60]">Full HD 1080p · Wi-Fi · Visão noturna · IP66</div>
+            ) : (<div className="mt-1 flex items-center gap-1 text-[12px] text-[#5a5b60]">
               <Star aria-hidden="true" className="h-[14px] w-[14px] fill-[#f2b900] text-[#f2b900]" />
               <b className="text-[#161823]">{product.rating}</b>
               <span className="text-[#2f7fff]">({product.ratingCount})</span>
@@ -624,7 +636,7 @@ export function ProductPage({
               <span>
                 <b className="font-semibold text-[#161823]">{product.sold}</b> vendidos
               </span>
-            </div>
+            </div>)}
           </div>
 
           <div className="mt-2 bg-white">
@@ -745,7 +757,7 @@ export function ProductPage({
           </div>
         </div>
 
-        <div className="mt-2 bg-white px-4 pt-3">
+        {!isCamera && (<div className="mt-2 bg-white px-4 pt-3">
           <div className="mb-2 text-[15px] font-semibold">
             Vídeos de criadores ({creatorVideos.length})
           </div>
@@ -790,18 +802,18 @@ export function ProductPage({
               </div>
             ))}
           </div>
-        </div>
+        </div>)}
 
         <div ref={reviewsRef} className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-[14px]">
-              <Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+              {!isCamera && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
               <b>{product.rating}</b>
-              <span className="mx-1 text-[#d0d0d3]">|</span>
+              <span className="mx-1 text-[#d0d0d3]">|</span></>)}
               <span className="font-semibold">Avaliações dos clientes ({product.ratingCount})</span>
               <Info aria-hidden="true" className="h-3.5 w-3.5 text-[#8a8b91]" />
             </div>
-            <Link
+            {!isCamera && (<Link
               to={
                 isPanela
                   ? "/panela"
@@ -817,8 +829,11 @@ export function ProductPage({
             >
               Ver mais
               <ChevronRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
+            </Link>)}
           </div>
+          {isCamera && reviews.length === 0 && (
+            <p className="mt-3 text-[13px] text-[#777]">Ainda não há avaliações verificadas disponíveis para este produto.</p>
+          )}
           {reviews.map((r) => (
             <div key={r.name} className="mt-4 flex items-start gap-3">
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f1f1f3] text-[12px] font-bold text-[#5a5b60]">
@@ -852,7 +867,7 @@ export function ProductPage({
             </div>
           ))}
 
-          <Link
+          {!isCamera && (<Link
             to={
               isPanela
                 ? "/panela"
@@ -868,7 +883,7 @@ export function ProductPage({
           >
             Ver todas as {product.ratingCount} avaliações
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
-          </Link>
+          </Link>)}
         </div>
 
         <div className="mt-2 bg-white px-4 py-3">
@@ -884,14 +899,14 @@ export function ProductPage({
               <div className="text-[12px] text-[#8a8b91]">{product.store.sold}</div>
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
+          {!isCamera && (<div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
             <span>
               <b className="text-[#161823]">100%</b> responde em 24 horas
             </span>
             <span>
               <b className="text-[#161823]">100%</b> envios pontuais
             </span>
-          </div>
+          </div>)}
         </div>
 
         <div ref={descRef} className="mt-2 bg-white pb-3">
@@ -1005,31 +1020,31 @@ export function ProductPage({
             />
             <div className="min-w-0 flex-1 pr-6">
               <div className="flex items-center gap-1.5">
-                <span className="rounded-md bg-[#fe2c55] px-1.5 py-[3px] text-[12px] font-extrabold leading-none text-white">
+                {!isCamera && (<span className="rounded-md bg-[#fe2c55] px-1.5 py-[3px] text-[12px] font-extrabold leading-none text-white">
                   -{product.discountPercent}%
-                </span>
+                </span>)}
                 <span className="text-[14px] font-semibold text-[#fe2c55]">R$</span>
                 <span className="text-[28px] font-extrabold leading-none tracking-[-0.02em] text-[#fe2c55]">
                   {money(product.price)}
                 </span>
                 <Ticket aria-hidden="true" className="h-4 w-4 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               </div>
-              <div className="mt-1 text-[13px] text-[#8a8b91] line-through">
+              {!isCamera && (<div className="mt-1 text-[13px] text-[#8a8b91] line-through">
                 {money(product.originalPrice)}
-              </div>
+              </div>)}
               <div className="mt-2 flex flex-col gap-1 text-[12px]">
                 <span className="inline-flex items-center gap-1 font-extrabold text-[#00b8a9]">
                   <Truck aria-hidden="true" className="mt-[1px] h-[16px] w-[16px] shrink-0 text-[#161823]" strokeWidth={1.9} />
                   Frete grátis
                 </span>
-                <span className="inline-flex items-center gap-1 font-extrabold text-[#fe2c55]">
+                {!isCamera && (<span className="inline-flex items-center gap-1 font-extrabold text-[#fe2c55]">
                   <Ticket aria-hidden="true" className="h-[11px] w-[11px]" />
                   <span className="truncate">Desconto máximo de {money(product.discountValue)} aplicado</span>
-                </span>
+                </span>)}
               </div>
             </div>
           </div>
-          <div className="mt-3 flex items-center justify-between rounded-lg bg-[linear-gradient(90deg,#ff7a2f,#ff9a4a)] px-3 py-2 text-white">
+          {!isCamera && (<div className="mt-3 flex items-center justify-between rounded-lg bg-[linear-gradient(90deg,#ff7a2f,#ff9a4a)] px-3 py-2 text-white">
             <div className="flex items-center gap-1.5 text-[14px] font-extrabold">
               <Zap aria-hidden="true" className="h-4 w-4 fill-white text-white" />
               Oferta Relâmpago
@@ -1037,7 +1052,7 @@ export function ProductPage({
             <div className="text-[12.5px] tabular-nums">
               Termina em: <b>{countdown}</b>
             </div>
-          </div>
+          </div>)}
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
             {isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
               ? `${isWap ? "Voltagem" : "Cor"} (${
