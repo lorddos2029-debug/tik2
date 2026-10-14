@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as RelogioRouteImport } from './routes/relogio'
 import { Route as WheyRouteImport } from './routes/whey'
 import { Route as CameraRouteImport } from './routes/camera'
 import { Route as BermudaRouteImport } from './routes/bermuda'
@@ -43,6 +44,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelogioRoute = RelogioRouteImport.update({
+  id: '/relogio',
+  path: '/relogio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WheyRoute = WheyRouteImport.update({
@@ -164,6 +170,7 @@ const PMotoserraCheckoutRoute = PMotoserraCheckoutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
@@ -191,6 +198,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/relogio'
     | '/whey'
     | '/camera'
     | '/bermuda'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/relogio'
     | '/whey'
     | '/camera'
     | '/bermuda'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/relogio'
     | '/whey'
     | '/camera'
     | '/bermuda'
@@ -328,6 +340,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  RelogioRoute: typeof RelogioRoute
   WheyRoute: typeof WheyRoute
   CameraRoute: typeof CameraRoute
   BermudaRoute: typeof BermudaRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relogio': {
+      id: '/relogio'
+      path: '/relogio'
+      fullPath: '/relogio'
+      preLoaderRoute: typeof RelogioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/whey': {
@@ -549,6 +569,7 @@ const PMotoserraRouteWithChildren = PMotoserraRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  RelogioRoute: RelogioRoute,
   WheyRoute: WheyRoute,
   CameraRoute: CameraRoute,
   BermudaRoute: BermudaRoute,
