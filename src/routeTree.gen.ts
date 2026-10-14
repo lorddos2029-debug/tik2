@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as WheyRouteImport } from './routes/whey'
 import { Route as CameraRouteImport } from './routes/camera'
 import { Route as BermudaRouteImport } from './routes/bermuda'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
@@ -42,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WheyRoute = WheyRouteImport.update({
+  id: '/whey',
+  path: '/whey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CameraRoute = CameraRouteImport.update({
@@ -158,6 +164,7 @@ const PMotoserraCheckoutRoute = PMotoserraCheckoutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
   '/carrinho': typeof CarrinhoRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
   '/carrinho': typeof CarrinhoRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
   '/bermuda': typeof BermudaRoute
   '/carrinho': typeof CarrinhoRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/whey'
     | '/camera'
     | '/bermuda'
     | '/carrinho'
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/whey'
     | '/camera'
     | '/bermuda'
     | '/carrinho'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/whey'
     | '/camera'
     | '/bermuda'
     | '/carrinho'
@@ -316,6 +328,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  WheyRoute: typeof WheyRoute
   CameraRoute: typeof CameraRoute
   BermudaRoute: typeof BermudaRoute
   CarrinhoRoute: typeof CarrinhoRoute
@@ -351,6 +364,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/whey': {
+      id: '/whey'
+      path: '/whey'
+      fullPath: '/whey'
+      preLoaderRoute: typeof WheyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/camera': {
@@ -529,6 +549,7 @@ const PMotoserraRouteWithChildren = PMotoserraRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  WheyRoute: WheyRoute,
   CameraRoute: CameraRoute,
   BermudaRoute: BermudaRoute,
   CarrinhoRoute: CarrinhoRoute,
