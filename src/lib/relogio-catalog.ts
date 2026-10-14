@@ -10,14 +10,66 @@ export const gallery = Array.from({ length: 9 }, (_, index) => `/products/relogi
 export const descriptionImages = gallery.slice(1);
 export const creatorVideos: { poster: string; src: string; embedUrl?: string }[] = [];
 
-/** Sem avaliações fornecidas: não criar compradores ou comentários fictícios. */
-export const reviews: {
+/** Avaliações transcritas dos prints enviados para este produto. */
+export const reviews: Array<{
   name: string;
   stars: number;
   variant: string;
   text: string;
   photos: string[];
-}[] = [];
+  verified?: boolean;
+  country?: string;
+  date?: string;
+}> = [
+  {
+    name: "K**a S**a",
+    stars: 5,
+    variant: "Titânio",
+    text: "Amei o relógio, fácil de conectar. Aparentemente parece ser muito bom. Comecei a usar e tô gostando. Meu pulso é fino e ficou muito bom.",
+    photos: ["/products/relogio/reviews/review-1.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-10-13",
+  },
+  {
+    name: "R**a K**y",
+    stars: 5,
+    variant: "Titânio",
+    text: "O relógio é lindo demais e muito fácil de configurar. Amei e super indico! Ah e a entrega foi muito rápida, chegou com 5 dias.",
+    photos: ["/products/relogio/reviews/review-2.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-10-09",
+  },
+  {
+    name: "s**a m**s",
+    stars: 5,
+    variant: "Titânio",
+    text: "Desempenho: Um relógio bonito, chegou bem rápido inclusive. Uma estética delicada feminina, veio com duas pulseiras, o touch dele é fácil de mexer o aplicativo também, tem muitas funções. Não cheguei a testar muita coisa nele nem a parte de treino, mas eu vou fazer o teste e venho aqui pra dar um feedback. Qualidade do trabalho: Bom.",
+    photos: ["/products/relogio/reviews/review-3.jpg"],
+    verified: true,
+    country: "BR",
+  },
+  {
+    name: "A**a B**a",
+    stars: 5,
+    variant: "Titânio",
+    text: "Desempenho: SIMPLESMENTE PERFEITO. Comprem sem medo. Estou usando a uma semana. Ele é maravilhoso !!!! Muitas funções. Mc todas funcionam. Chega notificação. Consigo atender chamadas. Bateria dura muuuuuito mesmo. Estou usando a uma semana sem parar e ainda tem 40% de bateria. Vale muito a pena.",
+    photos: ["/products/relogio/reviews/review-4.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-10-08",
+  },
+  {
+    name: "D**o",
+    stars: 5,
+    variant: "Titânio",
+    text: "Qualidade do trabalho: Parabéns, entrega muito rápido apenas 4 dias SLK👏👏👏 Desempenho: Confesso que fiquei ansioso para testar, então como eu tenho uma prova amanhã hoje fiz uma rodagem de leve apenas 2k pra ver como era o relógio. Primeiro smartwatch que eu vejo... a marcação até das zonas.... Uma pena não dar pra descrever tudo.",
+    photos: ["/products/relogio/reviews/review-5.jpg"],
+    verified: true,
+    country: "BR",
+  },
+];
 
 export const product = {
   slug: "relogio",
@@ -29,8 +81,8 @@ export const product = {
   discountValue: 272,
   shipping: 0,
   installments: { count: 1, value: 127.9 },
-  rating: 0,
-  ratingCount: 0,
+  rating: 5,
+  ratingCount: 5,
   sold: "—",
   variant: "Preto",
   store: {
