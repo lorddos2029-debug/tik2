@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
+  colorImages as relogioColorImages,
   gallery as relogioGallery,
   descriptionImages as relogioDescriptionImages,
   creatorVideos as relogioCreatorVideos,
@@ -332,6 +333,10 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasMoney
           : chainsawMoney;
+  const relogioColorOptions = [
+    { name: "Preto", image: relogioColorImages.Preto },
+    { name: "Branco", image: relogioColorImages.Branco },
+  ];
   const wheyFlavorOptions = [
     { name: "Natural", image: wheyFlavorImages.Natural },
     { name: "Chocolate", image: wheyFlavorImages.Chocolate },
@@ -411,6 +416,7 @@ export function ProductPage({
 
   const deliveryWindow = useDeliveryWindow();
   const [slide, setSlide] = useState(1);
+  const [selectedRelogioColor, setSelectedRelogioColor] = useState(relogioColorOptions[0] ?? fallbackVariant);
   const [selectedWheyFlavor, setSelectedWheyFlavor] = useState(wheyFlavorOptions[0] ?? fallbackVariant);
   const [selectedCameraColor, setSelectedCameraColor] = useState(cameraColorOptions[0] ?? fallbackVariant);
   const [selectedPanelaColor, setSelectedPanelaColor] = useState(panelaColorOptions[0] ?? fallbackVariant);
@@ -436,7 +442,9 @@ export function ProductPage({
   const [saved, setSaved] = useState(false);
   const checkoutKey = productKey;
   const selectedGallery =
-    isWhey
+    isRelogio
+      ? [selectedRelogioColor.image, ...relogioGallery.filter((image) => image !== selectedRelogioColor.image)]
+      : isWhey
       ? [selectedWheyFlavor.image, ...wheyGallery.filter((image) => image !== selectedWheyFlavor.image)]
       : isCamera
       ? [selectedCameraColor.image, ...cameraGallery.filter((image) => image !== selectedCameraColor.image)]
@@ -463,6 +471,10 @@ export function ProductPage({
 
   useEffect(() => {
     setQty(getQty());
+    if (isRelogio) {
+      saveSelectedVariantImage(selectedRelogioColor.image);
+      saveSelectedVariantLabel(selectedRelogioColor.name);
+    }
     if (isWhey) {
       saveSelectedVariantImage(selectedWheyFlavor.image);
       saveSelectedVariantLabel(selectedWheyFlavor.name);
@@ -719,7 +731,9 @@ export function ProductPage({
                 <LayoutGrid aria-hidden="true" className="h-[16px] w-[16px] shrink-0 text-[#5a5b60]" strokeWidth={1.9} />
                 <img
                   src={
-                    isWhey
+                    isRelogio
+                      ? selectedRelogioColor.image
+                      : isWhey
                       ? selectedWheyFlavor.image
                       : isCamera
                       ? selectedCameraColor.image
@@ -740,7 +754,9 @@ export function ProductPage({
                             : gallery[0]
                   }
                   alt={
-                    isWhey
+                    isRelogio
+                      ? selectedRelogioColor.name
+                      : isWhey
                       ? selectedWheyFlavor.name
                       : isCamera
                       ? selectedCameraColor.name
@@ -757,7 +773,9 @@ export function ProductPage({
                 <span className="text-[13px] text-[#5a5b60]">
                   Selecionado:{" "}
                   <span className="text-[#161823]">
-                    {isWhey
+                    {isRelogio
+                      ? selectedRelogioColor.name
+                      : isWhey
                       ? selectedWheyFlavor.name
                       : isCamera
                       ? selectedCameraColor.name
@@ -1059,7 +1077,9 @@ export function ProductPage({
           <div className="flex gap-3">
             <img
               src={
-                isWhey
+                isRelogio
+                  ? selectedRelogioColor.image
+                  : isWhey
                   ? selectedWheyFlavor.image
                   : isCamera
                   ? selectedCameraColor.image
@@ -1076,7 +1096,9 @@ export function ProductPage({
                       : gallery[0]
               }
               alt={
-                isWhey
+                isRelogio
+                  ? selectedRelogioColor.name
+                  : isWhey
                   ? selectedWheyFlavor.name
                   : isCamera
                   ? selectedCameraColor.name
@@ -1132,9 +1154,11 @@ export function ProductPage({
             </div>
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
-            {isWhey || isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
+            {isRelogio || isWhey || isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
               ? `${isWhey ? "Sabor" : isWap ? "Voltagem" : "Cor"} (${
-                  isWhey
+                  isRelogio
+                    ? relogioColorOptions.length
+                    : isWhey
                     ? wheyFlavorOptions.length
                     : isCamera
                     ? cameraColorOptions.length
@@ -1153,7 +1177,9 @@ export function ProductPage({
               : "(1)"}
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(isWhey
+            {(isRelogio
+              ? relogioColorOptions
+              : isWhey
               ? wheyFlavorOptions
               : isCamera
               ? cameraColorOptions
@@ -1178,6 +1204,7 @@ export function ProductPage({
                   key={option.name}
                   type="button"
                   onClick={() => {
+                    if (isRelogio) setSelectedRelogioColor(option);
                     if (isWhey) setSelectedWheyFlavor(option);
                     if (isCamera) setSelectedCameraColor(option);
                     if (isWap) setSelectedWapVoltage(option);
@@ -1193,7 +1220,7 @@ export function ProductPage({
                     if (isShort) setSelectedShortColor(option);
                     if (isBermuda) setSelectedBermudaColor(option);
                     if (isMagnesio) setSelectedMagnesioFlavor(option);
-                    if (!isWhey && !isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
+                    if (!isRelogio && !isWhey && !isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
                     saveSelectedVariantImage(option.image);
                     saveSelectedVariantLabel(
                       isBermuda
@@ -1207,7 +1234,8 @@ export function ProductPage({
                   }}
                   className={cn(
                     "relative inline-block overflow-hidden rounded-lg border-2",
-                    (!isWhey &&
+                    (!isRelogio &&
+                      !isWhey &&
                       !isCamera &&
                       !isWap &&
                       !isPanela &&
@@ -1216,6 +1244,7 @@ export function ProductPage({
                       !isShort &&
                       !isBermuda &&
                       !isMagnesio) ||
+                    (isRelogio && selectedRelogioColor.name === option.name) ||
                     (isWhey && selectedWheyFlavor.name === option.name) ||
                     (isCamera && selectedCameraColor.name === option.name) ||
                     (isPanela && selectedPanelaColor.name === option.name) ||
