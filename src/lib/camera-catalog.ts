@@ -19,10 +19,10 @@ export const product = {
   sold: "—",
   variant: "Branca",
   store: {
-    name: "Jortan",
-    initials: "JORTAN",
+    name: "TikTok",
+    initials: "TikTok",
     color: "#19865f",
-    sold: "Câmera de segurança",
+    sold: "24.312 vendidos",
   },
   specs: [
     "Câmera de segurança Wi-Fi IP para área externa, modelo Jortan.",
