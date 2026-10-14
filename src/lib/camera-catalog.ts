@@ -17,8 +17,8 @@ export const creatorVideos: Array<{ poster: string; src: string; embedUrl: strin
   {
     poster: "/products/camera/camera-1.webp",
     src: "",
-    embedUrl: "https://www.tiktok.com/player/v1/7695426729971682580",
-    href: "https://www.tiktok.com/@rodrigoarantespro/video/7695426729971682580",
+    embedUrl: "https://www.tiktok.com/player/v1/7695427212304010516",
+    href: "https://www.tiktok.com/@rodrigoarantespro/video/7695427212304010516",
   },
 ];
 export const reviews: { name: string; stars: number; variant: string; text: string; photos: string[] }[] = [];
