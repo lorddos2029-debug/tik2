@@ -1,4 +1,4 @@
-import { gallery as relogioGallery, product as relogioProduct } from "@/lib/relogio-catalog";
+import { colorImages as relogioColorImages, product as relogioProduct } from "@/lib/relogio-catalog";
 import { flavorImages as wheyFlavorImages, product as wheyProduct } from "@/lib/whey-catalog";
 import { colorImages as cameraColorImages, product as cameraProduct } from "@/lib/camera-catalog";
 import { gallery as chainsawGallery, product as chainsawProduct } from "@/lib/catalog";
@@ -81,7 +81,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
     id: "bettdow-smartwatch-gps-143-3atm",
     pagePath: "/relogio",
     title: relogioProduct.titleShort,
-    image: firstImage(relogioGallery),
+    image: relogioColorImages.Preto,
     price: relogioProduct.price,
     originalPrice: relogioProduct.originalPrice,
     discountPercent: relogioProduct.discountPercent,
