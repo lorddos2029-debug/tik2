@@ -858,7 +858,7 @@ export function ProductPage({
         <div ref={reviewsRef} className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-[14px]">
-              {!isCamera && !isWhey && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+              {!isCamera && (!isWhey || reviews.length > 0) && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
               <b>{product.rating}</b>
               <span className="mx-1 text-[#d0d0d3]">|</span></>)}
               <span className="font-semibold">Avaliações dos clientes ({product.ratingCount})</span>
@@ -885,15 +885,21 @@ export function ProductPage({
           {(isCamera || isWhey) && reviews.length === 0 && (
             <p className="mt-3 text-[13px] text-[#777]">Ainda não há avaliações verificadas disponíveis para este produto.</p>
           )}
-          {reviews.map((r) => (
-            <div key={r.name} className="mt-4 flex items-start gap-3">
+          {reviews.map((r, reviewIndex) => (
+            <div key={`${r.name}-${reviewIndex}`} className="mt-4 flex items-start gap-3">
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f1f1f3] text-[12px] font-bold text-[#5a5b60]">
                 {r.name[0]}
               </span>
               <div className="flex-1">
                 <div className="flex items-center gap-1 text-[12px] text-[#5a5b60]">
                   <span className="font-semibold text-[#161823]">{r.name}</span>
+                  {"verified" in r && r.verified && (
+                    <span className="font-medium text-[#198754]">· Compra verificada</span>
+                  )}
                 </div>
+                {"country" in r && r.country && (
+                  <div className="mt-0.5 text-[12px] text-[#8a8b91]">{r.country}</div>
+                )}
                 <div className="mt-0.5 flex items-center gap-1 text-[12px] text-[#5a5b60]">
                   <span className="tracking-[1px]">
                     <span className="text-[#f2b900]">{"★".repeat(r.stars)}</span>
@@ -902,6 +908,9 @@ export function ProductPage({
                   <span className="ml-1.5">· {r.variant}</span>
                 </div>
                 <div className="mt-1 whitespace-pre-line text-[14px]">{r.text}</div>
+                {"date" in r && r.date && (
+                  <div className="mt-2 text-[12px] text-[#8a8b91]">{r.date}</div>
+                )}
                 {r.photos?.length > 0 && (
                   <div className="mt-2 flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     {r.photos.map((photo) => (
