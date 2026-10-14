@@ -1025,7 +1025,7 @@ export function ProductPage({
                 </span>)}
                 <span className="text-[14px] font-semibold text-[#fe2c55]">R$</span>
                 <span className="text-[28px] font-extrabold leading-none tracking-[-0.02em] text-[#fe2c55]">
-                  {money(product.price)}
+                  {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                 </span>
                 <Ticket aria-hidden="true" className="h-4 w-4 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               </div>
