@@ -18,6 +18,15 @@ import { useEffect, useRef, useState } from "react";
 import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
+  flavorImages as wheyFlavorImages,
+  gallery as wheyGallery,
+  descriptionImages as wheyDescriptionImages,
+  creatorVideos as wheyCreatorVideos,
+  money as wheyMoney,
+  product as wheyProduct,
+  reviews as wheyReviews,
+} from "@/lib/whey-catalog";
+import {
   colorImages as cameraColorImages,
   gallery as cameraGallery,
   descriptionImages as cameraDescriptionImages,
@@ -163,6 +172,7 @@ export function ProductPage({
   productKey?:
     | "motoserra"
     | "camera"
+    | "whey"
     | "ferramentas"
     | "panela"
     | "forno"
@@ -175,6 +185,7 @@ export function ProductPage({
     | "serum";
 }) {
   const isCamera = productKey === "camera";
+  const isWhey = productKey === "whey";
   const isFerramentas = productKey === "ferramentas";
   const isPanela = productKey === "panela";
   const isForno = productKey === "forno";
@@ -185,7 +196,7 @@ export function ProductPage({
   const isMagnesio = productKey === "magnesio";
   const isWap = productKey === "wap";
   const isSerum = productKey === "serum";
-  const gallery = isCamera ? cameraGallery : isSerum
+  const gallery = isWhey ? wheyGallery : isCamera ? cameraGallery : isSerum
     ? serumGallery
     : isWap
     ? wapGallery
@@ -206,7 +217,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasGallery
           : chainsawGallery;
-  const descriptionImages = isCamera ? cameraDescriptionImages : isSerum
+  const descriptionImages = isWhey ? wheyDescriptionImages : isCamera ? cameraDescriptionImages : isSerum
     ? serumDescriptionImages
     : isWap
       ? wapDescriptionImages
@@ -227,7 +238,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasDescriptionImages
           : chainsawDescriptionImages;
-  const creatorVideos = isCamera ? cameraCreatorVideos : isSerum
+  const creatorVideos = isWhey ? wheyCreatorVideos : isCamera ? cameraCreatorVideos : isSerum
     ? serumCreatorVideos
     : isWap
       ? wapCreatorVideos
@@ -248,7 +259,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasCreatorVideos
           : chainsawCreatorVideos;
-  const product = isCamera ? cameraProduct : isSerum
+  const product = isWhey ? wheyProduct : isCamera ? cameraProduct : isSerum
     ? serumProduct
     : isWap
       ? wapProduct
@@ -269,7 +280,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasProduct
           : chainsawProduct;
-  const reviews = isCamera ? cameraReviews : isSerum
+  const reviews = isWhey ? wheyReviews : isCamera ? cameraReviews : isSerum
     ? serumReviews
     : isWap
       ? wapReviews
@@ -290,7 +301,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasReviews
           : chainsawReviews;
-  const money = isCamera ? cameraMoney : isSerum
+  const money = isWhey ? wheyMoney : isCamera ? cameraMoney : isSerum
     ? serumMoney
     : isWap
       ? wapMoney
@@ -311,6 +322,12 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasMoney
           : chainsawMoney;
+  const wheyFlavorOptions = [
+    { name: "Natural", image: wheyFlavorImages.Natural },
+    { name: "Chocolate", image: wheyFlavorImages.Chocolate },
+    { name: "Morango", image: wheyFlavorImages.Morango },
+    { name: "Baunilha", image: wheyFlavorImages.Baunilha },
+  ];
   const cameraColorOptions = [
     { name: "Branca", image: cameraColorImages.Branca },
     { name: "Preta", image: cameraColorImages.Preta },
@@ -384,6 +401,7 @@ export function ProductPage({
 
   const deliveryWindow = useDeliveryWindow();
   const [slide, setSlide] = useState(1);
+  const [selectedWheyFlavor, setSelectedWheyFlavor] = useState(wheyFlavorOptions[0] ?? fallbackVariant);
   const [selectedCameraColor, setSelectedCameraColor] = useState(cameraColorOptions[0] ?? fallbackVariant);
   const [selectedPanelaColor, setSelectedPanelaColor] = useState(panelaColorOptions[0] ?? fallbackVariant);
   const [selectedTabletColor, setSelectedTabletColor] = useState(tabletColorOptions[3] ?? fallbackVariant);
@@ -408,7 +426,9 @@ export function ProductPage({
   const [saved, setSaved] = useState(false);
   const checkoutKey = productKey;
   const selectedGallery =
-    isCamera
+    isWhey
+      ? [selectedWheyFlavor.image, ...wheyGallery.filter((image) => image !== selectedWheyFlavor.image)]
+      : isCamera
       ? [selectedCameraColor.image, ...cameraGallery.filter((image) => image !== selectedCameraColor.image)]
       : isWap
       ? [wapHighlightImage, ...wapGallery]
@@ -433,6 +453,10 @@ export function ProductPage({
 
   useEffect(() => {
     setQty(getQty());
+    if (isWhey) {
+      saveSelectedVariantImage(selectedWheyFlavor.image);
+      saveSelectedVariantLabel(selectedWheyFlavor.name);
+    }
     if (isCamera) {
       saveSelectedVariantImage(selectedCameraColor.image);
       saveSelectedVariantLabel(selectedCameraColor.name);
@@ -639,7 +663,9 @@ export function ProductPage({
                 />
               </button>
             </div>
-            {isCamera ? (
+            {isWhey ? (
+              <div className="mt-1 text-[12px] text-[#5a5b60]">Embalagem de 1 kg · 4 opções de sabor</div>
+            ) : isCamera ? (
               <div className="mt-1 text-[12px] text-[#5a5b60]">Full HD 1080p · Wi-Fi · Visão noturna · IP66</div>
             ) : (<div className="mt-1 flex items-center gap-1 text-[12px] text-[#5a5b60]">
               <Star aria-hidden="true" className="h-[14px] w-[14px] fill-[#f2b900] text-[#f2b900]" />
@@ -683,7 +709,9 @@ export function ProductPage({
                 <LayoutGrid aria-hidden="true" className="h-[16px] w-[16px] shrink-0 text-[#5a5b60]" strokeWidth={1.9} />
                 <img
                   src={
-                    isCamera
+                    isWhey
+                      ? selectedWheyFlavor.image
+                      : isCamera
                       ? selectedCameraColor.image
                       : isWap
                       ? selectedWapVoltage.image
@@ -702,7 +730,9 @@ export function ProductPage({
                             : gallery[0]
                   }
                   alt={
-                    isCamera
+                    isWhey
+                      ? selectedWheyFlavor.name
+                      : isCamera
                       ? selectedCameraColor.name
                       : isPanela
                       ? selectedPanelaColor.name
@@ -717,7 +747,9 @@ export function ProductPage({
                 <span className="text-[13px] text-[#5a5b60]">
                   Selecionado:{" "}
                   <span className="text-[#161823]">
-                    {isCamera
+                    {isWhey
+                      ? selectedWheyFlavor.name
+                      : isCamera
                       ? selectedCameraColor.name
                       : isPanela
                       ? selectedPanelaColor.name
@@ -776,7 +808,7 @@ export function ProductPage({
           </div>
         </div>
 
-        {(!isCamera || creatorVideos.length > 0) && (<div className="mt-2 bg-white px-4 pt-3">
+        {((!isCamera && !isWhey) || creatorVideos.length > 0) && (<div className="mt-2 bg-white px-4 pt-3">
           <div className="mb-2 text-[15px] font-semibold">
             Vídeos de criadores ({creatorVideos.length})
           </div>
@@ -826,13 +858,13 @@ export function ProductPage({
         <div ref={reviewsRef} className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-[14px]">
-              {!isCamera && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+              {!isCamera && !isWhey && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
               <b>{product.rating}</b>
               <span className="mx-1 text-[#d0d0d3]">|</span></>)}
               <span className="font-semibold">Avaliações dos clientes ({product.ratingCount})</span>
               <Info aria-hidden="true" className="h-3.5 w-3.5 text-[#8a8b91]" />
             </div>
-            {!isCamera && (<Link
+            {!isCamera && !isWhey && (<Link
               to={
                 isPanela
                   ? "/panela"
@@ -850,7 +882,7 @@ export function ProductPage({
               <ChevronRight aria-hidden="true" className="h-4 w-4" />
             </Link>)}
           </div>
-          {isCamera && reviews.length === 0 && (
+          {(isCamera || isWhey) && reviews.length === 0 && (
             <p className="mt-3 text-[13px] text-[#777]">Ainda não há avaliações verificadas disponíveis para este produto.</p>
           )}
           {reviews.map((r) => (
@@ -886,7 +918,7 @@ export function ProductPage({
             </div>
           ))}
 
-          {!isCamera && (<Link
+          {!isCamera && !isWhey && (<Link
             to={
               isPanela
                 ? "/panela"
@@ -918,7 +950,7 @@ export function ProductPage({
               <div className="text-[12px] text-[#8a8b91]">{product.store.sold}</div>
             </div>
           </div>
-          {!isCamera && (<div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
+          {!isCamera && !isWhey && (<div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
             <span>
               <b className="text-[#161823]">100%</b> responde em 24 horas
             </span>
@@ -1008,7 +1040,9 @@ export function ProductPage({
           <div className="flex gap-3">
             <img
               src={
-                isCamera
+                isWhey
+                  ? selectedWheyFlavor.image
+                  : isCamera
                   ? selectedCameraColor.image
                   : isWap
                   ? selectedWapVoltage.image
@@ -1023,7 +1057,9 @@ export function ProductPage({
                       : gallery[0]
               }
               alt={
-                isCamera
+                isWhey
+                  ? selectedWheyFlavor.name
+                  : isCamera
                   ? selectedCameraColor.name
                   : isWap
                   ? selectedWapVoltage.name
@@ -1077,9 +1113,11 @@ export function ProductPage({
             </div>
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
-            {isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
-              ? `${isWap ? "Voltagem" : "Cor"} (${
-                  isCamera
+            {isWhey || isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
+              ? `${isWhey ? "Sabor" : isWap ? "Voltagem" : "Cor"} (${
+                  isWhey
+                    ? wheyFlavorOptions.length
+                    : isCamera
                     ? cameraColorOptions.length
                     : isWap
                     ? wapVoltageOptions.length
@@ -1096,7 +1134,9 @@ export function ProductPage({
               : "(1)"}
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(isCamera
+            {(isWhey
+              ? wheyFlavorOptions
+              : isCamera
               ? cameraColorOptions
               : isWap
               ? wapVoltageOptions
@@ -1119,6 +1159,7 @@ export function ProductPage({
                   key={option.name}
                   type="button"
                   onClick={() => {
+                    if (isWhey) setSelectedWheyFlavor(option);
                     if (isCamera) setSelectedCameraColor(option);
                     if (isWap) setSelectedWapVoltage(option);
                     if (isPanela) setSelectedPanelaColor(option);
@@ -1133,7 +1174,7 @@ export function ProductPage({
                     if (isShort) setSelectedShortColor(option);
                     if (isBermuda) setSelectedBermudaColor(option);
                     if (isMagnesio) setSelectedMagnesioFlavor(option);
-                    if (!isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
+                    if (!isWhey && !isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
                     saveSelectedVariantImage(option.image);
                     saveSelectedVariantLabel(
                       isBermuda
@@ -1147,7 +1188,8 @@ export function ProductPage({
                   }}
                   className={cn(
                     "relative inline-block overflow-hidden rounded-lg border-2",
-                    (!isCamera &&
+                    (!isWhey &&
+                      !isCamera &&
                       !isWap &&
                       !isPanela &&
                       !isTablet &&
@@ -1155,6 +1197,7 @@ export function ProductPage({
                       !isShort &&
                       !isBermuda &&
                       !isMagnesio) ||
+                    (isWhey && selectedWheyFlavor.name === option.name) ||
                     (isCamera && selectedCameraColor.name === option.name) ||
                     (isPanela && selectedPanelaColor.name === option.name) ||
                     (isTablet && selectedTabletColor.name === option.name) ||
