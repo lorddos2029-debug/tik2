@@ -29,10 +29,10 @@ export const product = {
   sold: "—",
   variant: "Padrão",
   store: {
-    name: "Relógios e Acessórios",
-    initials: "R",
+    name: "TikTok",
+    initials: "TikTok",
     color: "#161823",
-    sold: "Smartwatch Bettdow",
+    sold: "24.312 vendidos",
   },
   specs: [
     "Smartwatch esportivo Bettdow com tela AMOLED de aproximadamente 1,43 polegada, conforme informações do anúncio.",
