@@ -1,4 +1,4 @@
-import { gallery as cameraGallery, product as cameraProduct } from "@/lib/camera-catalog";
+import { colorImages as cameraColorImages, product as cameraProduct } from "@/lib/camera-catalog";
 import { gallery as chainsawGallery, product as chainsawProduct } from "@/lib/catalog";
 import { gallery as pillowGallery, product as pillowProduct } from "@/lib/pillow-catalog";
 import { gallery as rolimaGallery, product as rolimaProduct } from "@/lib/rolima-catalog";
@@ -75,7 +75,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
     id: "camera-seguranca-wifi-jortan-360-full-hd",
     pagePath: "/camera",
     title: cameraProduct.titleShort,
-    image: firstImage(cameraGallery),
+    image: cameraColorImages.Branca,
     price: cameraProduct.price,
     originalPrice: cameraProduct.originalPrice,
     discountPercent: cameraProduct.discountPercent,
