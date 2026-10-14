@@ -589,7 +589,7 @@ export function ProductPage({
                   </span>
                   <span className="mb-[5px] text-[12px] font-bold leading-none">R$</span>
                   <span className="text-[28px] font-extrabold leading-[0.85] tracking-[-0.02em]">
-                    {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
+                    {isCamera || isWhey ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                   </span>
                   <Ticket
                     aria-hidden="true"
@@ -1084,7 +1084,7 @@ export function ProductPage({
                 </span>
                 <span className="text-[14px] font-semibold text-[#fe2c55]">R$</span>
                 <span className="text-[28px] font-extrabold leading-none tracking-[-0.02em] text-[#fe2c55]">
-                  {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
+                  {isCamera || isWhey ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                 </span>
                 <Ticket aria-hidden="true" className="h-4 w-4 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               </div>
