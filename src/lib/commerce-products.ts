@@ -1,3 +1,4 @@
+import { gallery as relogioGallery, product as relogioProduct } from "@/lib/relogio-catalog";
 import { flavorImages as wheyFlavorImages, product as wheyProduct } from "@/lib/whey-catalog";
 import { colorImages as cameraColorImages, product as cameraProduct } from "@/lib/camera-catalog";
 import { gallery as chainsawGallery, product as chainsawProduct } from "@/lib/catalog";
@@ -18,6 +19,7 @@ import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog"
 import { gallery as serumGallery, product as serumProduct } from "@/lib/serum-catalog";
 
 export type ProductKey =
+  | "relogio"
   | "whey"
   | "camera"
   | "motoserra"
@@ -41,6 +43,7 @@ export interface CheckoutProduct {
   key: ProductKey;
   id: string;
   pagePath:
+    | "/relogio"
     | "/whey"
     | "/camera"
     | "/p/motoserra"
@@ -73,6 +76,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  relogio: {
+    key: "relogio",
+    id: "bettdow-smartwatch-gps-143-3atm",
+    pagePath: "/relogio",
+    title: relogioProduct.titleShort,
+    image: firstImage(relogioGallery),
+    price: relogioProduct.price,
+    originalPrice: relogioProduct.originalPrice,
+    discountPercent: relogioProduct.discountPercent,
+    shipping: relogioProduct.shipping,
+    rating: relogioProduct.rating,
+    variant: relogioProduct.variant,
+    storeName: relogioProduct.store.name,
+  },
   whey: {
     key: "whey",
     id: "basic-whey-protein-1kg",
@@ -330,6 +347,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
 export const defaultCheckoutProduct = checkoutProducts.motoserra;
 
 export const isProductKey = (value: unknown): value is ProductKey =>
+  value === "relogio" ||
   value === "whey" ||
   value === "camera" ||
   value === "motoserra" ||
