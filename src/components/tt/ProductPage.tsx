@@ -547,9 +547,9 @@ export function ProductPage({
             <div className="relative flex items-center justify-between gap-3">
               <div className="flex flex-col">
                 <div className="flex items-end gap-1">
-                  {!isCamera && (<span className="mb-[5px] rounded-[4px] bg-white px-[5px] py-[2px] text-[10px] font-extrabold leading-none text-[#fe2c55]">
+                  <span className="mb-[5px] rounded-[4px] bg-white px-[5px] py-[2px] text-[10px] font-extrabold leading-none text-[#fe2c55]">
                     -{product.discountPercent}%
-                  </span>)}
+                  </span>
                   <span className="mb-[5px] text-[12px] font-bold leading-none">R$</span>
                   <span className="text-[28px] font-extrabold leading-[0.85] tracking-[-0.02em]">
                     {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
@@ -560,18 +560,18 @@ export function ProductPage({
                     strokeWidth={2.2}
                   />
                 </div>
-                {!isCamera && (<span className="mt-[4px] text-[12px] font-normal text-white/90 line-through">
+                <span className="mt-[4px] text-[12px] font-normal text-white/90 line-through">
                   {money(product.originalPrice)}
-                </span>)}
+                </span>
               </div>
               <div className="shrink-0 pr-0.5 text-right">
                 <div className="flex items-center justify-end gap-1 whitespace-nowrap text-[13px] font-extrabold leading-none">
                   <Zap aria-hidden="true" className="h-[13px] w-[13px] fill-white text-white" strokeWidth={0} />
-                  {isCamera ? "Câmera Jortan" : "Oferta Relâmpago"}
+                  Oferta Relâmpago
                 </div>
-                {!isCamera && (<div className="mt-1.5 whitespace-nowrap text-[11px] font-semibold leading-none tabular-nums text-white">
+                <div className="mt-1.5 whitespace-nowrap text-[11px] font-semibold leading-none tabular-nums text-white">
                   Termina em: {countdown}
-                </div>)}
+                </div>
               </div>
             </div>
           </div>
@@ -593,20 +593,20 @@ export function ProductPage({
             </div>
           </div>
 
-          {!isCamera && (<div className="bg-white px-4 py-[7px]">
+          <div className="bg-white px-4 py-[7px]">
             <div className="flex min-w-0 items-center gap-[5px] text-[12px] font-extrabold leading-none text-[#d62955]">
               <Ticket aria-hidden="true" className="h-[13px] w-[13px] shrink-0 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               <span className="min-w-0 flex-1 truncate">
                 Desconto máximo de {money(product.discountValue)} aplicado
               </span>
             </div>
-          </div>)}
+          </div>
 
           <div className="bg-white px-4 pb-2 pt-1.5">
             <div className="flex items-start justify-between gap-3">
               <h1 className="cursor-pointer text-[15px] font-bold leading-[1.28] tracking-[-0.005em] text-[#161823]">
                 {product.titleShort}
-                {!isCamera && <span className="text-[#161823]">...</span>}
+                <span className="text-[#161823]">...</span>
               </h1>
               <button
                 aria-label="Salvar"
@@ -1020,31 +1020,31 @@ export function ProductPage({
             />
             <div className="min-w-0 flex-1 pr-6">
               <div className="flex items-center gap-1.5">
-                {!isCamera && (<span className="rounded-md bg-[#fe2c55] px-1.5 py-[3px] text-[12px] font-extrabold leading-none text-white">
+                <span className="rounded-md bg-[#fe2c55] px-1.5 py-[3px] text-[12px] font-extrabold leading-none text-white">
                   -{product.discountPercent}%
-                </span>)}
+                </span>
                 <span className="text-[14px] font-semibold text-[#fe2c55]">R$</span>
                 <span className="text-[28px] font-extrabold leading-none tracking-[-0.02em] text-[#fe2c55]">
                   {isCamera ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                 </span>
                 <Ticket aria-hidden="true" className="h-4 w-4 -rotate-12 text-[#fe2c55]" strokeWidth={2.2} />
               </div>
-              {!isCamera && (<div className="mt-1 text-[13px] text-[#8a8b91] line-through">
+              <div className="mt-1 text-[13px] text-[#8a8b91] line-through">
                 {money(product.originalPrice)}
-              </div>)}
+              </div>
               <div className="mt-2 flex flex-col gap-1 text-[12px]">
                 <span className="inline-flex items-center gap-1 font-extrabold text-[#00b8a9]">
                   <Truck aria-hidden="true" className="mt-[1px] h-[16px] w-[16px] shrink-0 text-[#161823]" strokeWidth={1.9} />
                   Frete grátis
                 </span>
-                {!isCamera && (<span className="inline-flex items-center gap-1 font-extrabold text-[#fe2c55]">
+                <span className="inline-flex items-center gap-1 font-extrabold text-[#fe2c55]">
                   <Ticket aria-hidden="true" className="h-[11px] w-[11px]" />
                   <span className="truncate">Desconto máximo de {money(product.discountValue)} aplicado</span>
-                </span>)}
+                </span>
               </div>
             </div>
           </div>
-          {!isCamera && (<div className="mt-3 flex items-center justify-between rounded-lg bg-[linear-gradient(90deg,#ff7a2f,#ff9a4a)] px-3 py-2 text-white">
+          <div className="mt-3 flex items-center justify-between rounded-lg bg-[linear-gradient(90deg,#ff7a2f,#ff9a4a)] px-3 py-2 text-white">
             <div className="flex items-center gap-1.5 text-[14px] font-extrabold">
               <Zap aria-hidden="true" className="h-4 w-4 fill-white text-white" />
               Oferta Relâmpago
@@ -1052,7 +1052,7 @@ export function ProductPage({
             <div className="text-[12.5px] tabular-nums">
               Termina em: <b>{countdown}</b>
             </div>
-          </div>)}
+          </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
             {isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
               ? `${isWap ? "Voltagem" : "Cor"} (${
