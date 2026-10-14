@@ -1,3 +1,4 @@
+import { gallery as cameraGallery, product as cameraProduct } from "@/lib/camera-catalog";
 import { gallery as chainsawGallery, product as chainsawProduct } from "@/lib/catalog";
 import { gallery as pillowGallery, product as pillowProduct } from "@/lib/pillow-catalog";
 import { gallery as rolimaGallery, product as rolimaProduct } from "@/lib/rolima-catalog";
@@ -16,6 +17,7 @@ import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog"
 import { gallery as serumGallery, product as serumProduct } from "@/lib/serum-catalog";
 
 export type ProductKey =
+  | "camera"
   | "motoserra"
   | "travesseiro"
   | "rolima"
@@ -37,6 +39,7 @@ export interface CheckoutProduct {
   key: ProductKey;
   id: string;
   pagePath:
+    | "/camera"
     | "/p/motoserra"
     | "/travesseiro"
     | "/carrinho"
@@ -67,6 +70,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  camera: {
+    key: "camera",
+    id: "camera-seguranca-wifi-jortan-360-full-hd",
+    pagePath: "/camera",
+    title: cameraProduct.titleShort,
+    image: firstImage(cameraGallery),
+    price: cameraProduct.price,
+    originalPrice: cameraProduct.originalPrice,
+    discountPercent: cameraProduct.discountPercent,
+    shipping: cameraProduct.shipping,
+    rating: cameraProduct.rating,
+    variant: cameraProduct.variant,
+    storeName: cameraProduct.store.name,
+  },
   serum: {
     key: "serum",
     id: "ghk-zencial-envy-skin-serum-30ml",
@@ -296,6 +313,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
 export const defaultCheckoutProduct = checkoutProducts.motoserra;
 
 export const isProductKey = (value: unknown): value is ProductKey =>
+  value === "camera" ||
   value === "motoserra" ||
   value === "travesseiro" ||
   value === "rolima" ||
