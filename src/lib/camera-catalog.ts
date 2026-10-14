@@ -1,7 +1,26 @@
 /** Dados da câmera Jortan enviados pelo anunciante. Não inventar avaliações ou descontos. */
 export const gallery = Array.from({ length: 8 }, (_, i) => `/products/camera/camera-${i + 1}.webp`);
 export const descriptionImages = [...gallery];
-export const creatorVideos: { poster: string; src: string }[] = [];
+export const creatorVideos: Array<{ poster: string; src: string; embedUrl: string; href: string }> = [
+  {
+    poster: gallery[0],
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7695402661847305492",
+    href: "https://www.tiktok.com/@vanessadantask/video/7695402661847305492",
+  },
+  {
+    poster: gallery[0],
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7695426729971682580",
+    href: "https://www.tiktok.com/@rodrigoarantespro/video/7695426729971682580",
+  },
+  {
+    poster: gallery[0],
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7695426729971682580",
+    href: "https://www.tiktok.com/@rodrigoarantespro/video/7695426729971682580",
+  },
+];
 export const reviews: { name: string; stars: number; variant: string; text: string; photos: string[] }[] = [];
 
 export const product = {
