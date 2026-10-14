@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
+  colorImages as cameraColorImages,
   gallery as cameraGallery,
   descriptionImages as cameraDescriptionImages,
   creatorVideos as cameraCreatorVideos,
@@ -310,6 +311,11 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasMoney
           : chainsawMoney;
+  const cameraColorOptions = [
+    { name: "Branca", image: cameraColorImages.Branca },
+    { name: "Preta", image: cameraColorImages.Preta },
+    { name: "Rosa", image: cameraColorImages.Rosa },
+  ];
   const panelaColorOptions = [
     { name: "Marrom", image: panelaColorImages.Marrom },
     { name: "Branca", image: panelaColorImages.Branca },
@@ -378,6 +384,7 @@ export function ProductPage({
 
   const deliveryWindow = useDeliveryWindow();
   const [slide, setSlide] = useState(1);
+  const [selectedCameraColor, setSelectedCameraColor] = useState(cameraColorOptions[0] ?? fallbackVariant);
   const [selectedPanelaColor, setSelectedPanelaColor] = useState(panelaColorOptions[0] ?? fallbackVariant);
   const [selectedTabletColor, setSelectedTabletColor] = useState(tabletColorOptions[3] ?? fallbackVariant);
   const [selectedTablet2Color, setSelectedTablet2Color] = useState(tablet2ColorOptions[0] ?? fallbackVariant);
@@ -401,7 +408,9 @@ export function ProductPage({
   const [saved, setSaved] = useState(false);
   const checkoutKey = productKey;
   const selectedGallery =
-    isWap
+    isCamera
+      ? [selectedCameraColor.image, ...cameraGallery.filter((image) => image !== selectedCameraColor.image)]
+      : isWap
       ? [wapHighlightImage, ...wapGallery]
       : isMagnesio
         ? [selectedMagnesioFlavor.image]
@@ -424,6 +433,10 @@ export function ProductPage({
 
   useEffect(() => {
     setQty(getQty());
+    if (isCamera) {
+      saveSelectedVariantImage(selectedCameraColor.image);
+      saveSelectedVariantLabel(selectedCameraColor.name);
+    }
     if (isPanela) saveSelectedVariantImage(selectedPanelaColor.image);
     if (isTablet) saveSelectedVariantImage(selectedTabletColor.image);
     if (isTablet2) saveSelectedVariantImage(selectedTablet2Color.image);
@@ -670,7 +683,9 @@ export function ProductPage({
                 <LayoutGrid aria-hidden="true" className="h-[16px] w-[16px] shrink-0 text-[#5a5b60]" strokeWidth={1.9} />
                 <img
                   src={
-                    isWap
+                    isCamera
+                      ? selectedCameraColor.image
+                      : isWap
                       ? selectedWapVoltage.image
                       : isMagnesio
                         ? selectedMagnesioFlavor.image
@@ -687,7 +702,9 @@ export function ProductPage({
                             : gallery[0]
                   }
                   alt={
-                    isPanela
+                    isCamera
+                      ? selectedCameraColor.name
+                      : isPanela
                       ? selectedPanelaColor.name
                       : isTablet2
                         ? selectedTablet2Color.name
@@ -700,7 +717,9 @@ export function ProductPage({
                 <span className="text-[13px] text-[#5a5b60]">
                   Selecionado:{" "}
                   <span className="text-[#161823]">
-                    {isPanela
+                    {isCamera
+                      ? selectedCameraColor.name
+                      : isPanela
                       ? selectedPanelaColor.name
                       : isTablet2
                         ? selectedTablet2Color.name
@@ -989,7 +1008,9 @@ export function ProductPage({
           <div className="flex gap-3">
             <img
               src={
-                isWap
+                isCamera
+                  ? selectedCameraColor.image
+                  : isWap
                   ? selectedWapVoltage.image
                   : isMagnesio
                     ? selectedMagnesioFlavor.image
@@ -1002,7 +1023,9 @@ export function ProductPage({
                       : gallery[0]
               }
               alt={
-                isWap
+                isCamera
+                  ? selectedCameraColor.name
+                  : isWap
                   ? selectedWapVoltage.name
                   : isMagnesio
                     ? selectedMagnesioFlavor.name
@@ -1054,9 +1077,11 @@ export function ProductPage({
             </div>
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
-            {isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
+            {isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
               ? `${isWap ? "Voltagem" : "Cor"} (${
-                  isWap
+                  isCamera
+                    ? cameraColorOptions.length
+                    : isWap
                     ? wapVoltageOptions.length
                     : isPanela
                       ? panelaColorOptions.length
@@ -1071,7 +1096,9 @@ export function ProductPage({
               : "(1)"}
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(isWap
+            {(isCamera
+              ? cameraColorOptions
+              : isWap
               ? wapVoltageOptions
               : isPanela
                 ? panelaColorOptions
@@ -1092,6 +1119,7 @@ export function ProductPage({
                   key={option.name}
                   type="button"
                   onClick={() => {
+                    if (isCamera) setSelectedCameraColor(option);
                     if (isWap) setSelectedWapVoltage(option);
                     if (isPanela) setSelectedPanelaColor(option);
                     if (isTablet2) {
@@ -1105,7 +1133,7 @@ export function ProductPage({
                     if (isShort) setSelectedShortColor(option);
                     if (isBermuda) setSelectedBermudaColor(option);
                     if (isMagnesio) setSelectedMagnesioFlavor(option);
-                    if (!isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
+                    if (!isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
                     saveSelectedVariantImage(option.image);
                     saveSelectedVariantLabel(
                       isBermuda
@@ -1119,13 +1147,15 @@ export function ProductPage({
                   }}
                   className={cn(
                     "relative inline-block overflow-hidden rounded-lg border-2",
-                    (!isWap &&
+                    (!isCamera &&
+                      !isWap &&
                       !isPanela &&
                       !isTablet &&
                       !isTablet2 &&
                       !isShort &&
                       !isBermuda &&
                       !isMagnesio) ||
+                    (isCamera && selectedCameraColor.name === option.name) ||
                     (isPanela && selectedPanelaColor.name === option.name) ||
                     (isTablet && selectedTabletColor.name === option.name) ||
                     (isTablet2 && selectedTablet2Color.name === option.name) ||
