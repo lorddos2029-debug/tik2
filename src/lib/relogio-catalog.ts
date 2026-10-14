@@ -1,4 +1,9 @@
 /** Imagens originais Bettdow fornecidas para /relogio (PNG 800px, sem redução de qualidade). */
+export const colorImages = {
+  Preto: "/products/relogio/preto.png",
+  Branco: "/products/relogio/branco.png",
+} as const;
+
 export const gallery = Array.from({ length: 9 }, (_, index) => `/products/relogio/relogio-${index + 1}.png`);
 
 /** Galeria ilustrativa e especificações detalhadas na descrição. */
@@ -27,7 +32,7 @@ export const product = {
   rating: 0,
   ratingCount: 0,
   sold: "—",
-  variant: "Padrão",
+  variant: "Preto",
   store: {
     name: "TikTok",
     initials: "TikTok",
