@@ -757,7 +757,7 @@ export function ProductPage({
           </div>
         </div>
 
-        {!isCamera && (<div className="mt-2 bg-white px-4 pt-3">
+        {(!isCamera || creatorVideos.length > 0) && (<div className="mt-2 bg-white px-4 pt-3">
           <div className="mb-2 text-[15px] font-semibold">
             Vídeos de criadores ({creatorVideos.length})
           </div>
