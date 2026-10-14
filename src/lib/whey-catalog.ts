@@ -8,7 +8,26 @@ export const flavorImages = {
 
 export const gallery = Object.values(flavorImages);
 export const descriptionImages = [...gallery];
-export const creatorVideos: Array<{ poster: string; src: string }> = [];
+export const creatorVideos: Array<{ poster: string; src: string; embedUrl: string; href: string }> = [
+  {
+    poster: flavorImages.Natural,
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7691703622563892486",
+    href: "https://www.tiktok.com/@anagabi.x/video/7691703622563892486",
+  },
+  {
+    poster: flavorImages.Chocolate,
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7688116662058372360",
+    href: "https://www.tiktok.com/@paulorecomendaoficial/video/7688116662058372360",
+  },
+  {
+    poster: flavorImages.Morango,
+    src: "",
+    embedUrl: "https://www.tiktok.com/player/v1/7684845629457042708",
+    href: "https://www.tiktok.com/@daiane_costaa93/video/7684845629457042708",
+  },
+];
 /** Avaliações transcritas dos prints fornecidos para este produto. */
 export const reviews: Array<{
   name: string;
