@@ -1,3 +1,4 @@
+import { gallery as airfryerGallery, product as airfryerProduct } from "@/lib/airfryer-catalog";
 import { colorImages as relogioColorImages, product as relogioProduct } from "@/lib/relogio-catalog";
 import { flavorImages as wheyFlavorImages, product as wheyProduct } from "@/lib/whey-catalog";
 import { colorImages as cameraColorImages, product as cameraProduct } from "@/lib/camera-catalog";
@@ -19,6 +20,7 @@ import { gallery as wapGallery, product as wapProduct } from "@/lib/wap-catalog"
 import { gallery as serumGallery, product as serumProduct } from "@/lib/serum-catalog";
 
 export type ProductKey =
+  | "airfryer"
   | "relogio"
   | "whey"
   | "camera"
@@ -43,6 +45,7 @@ export interface CheckoutProduct {
   key: ProductKey;
   id: string;
   pagePath:
+    | "/airfryer"
     | "/relogio"
     | "/whey"
     | "/camera"
@@ -76,6 +79,20 @@ const firstImage = (images: readonly string[], fallback = "/favicon.png") =>
   images[0] ?? fallback;
 
 export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
+  airfryer: {
+    key: "airfryer",
+    id: "fritadeira-air-fryer-facilita-fry-elgin-35l-preta",
+    pagePath: "/airfryer",
+    title: airfryerProduct.titleShort,
+    image: firstImage(airfryerGallery),
+    price: airfryerProduct.price,
+    originalPrice: airfryerProduct.originalPrice,
+    discountPercent: airfryerProduct.discountPercent,
+    shipping: airfryerProduct.shipping,
+    rating: airfryerProduct.rating,
+    variant: airfryerProduct.variant,
+    storeName: airfryerProduct.store.name,
+  },
   relogio: {
     key: "relogio",
     id: "bettdow-smartwatch-gps-143-3atm",
@@ -347,6 +364,7 @@ export const checkoutProducts: Record<ProductKey, CheckoutProduct> = {
 export const defaultCheckoutProduct = checkoutProducts.motoserra;
 
 export const isProductKey = (value: unknown): value is ProductKey =>
+  value === "airfryer" ||
   value === "relogio" ||
   value === "whey" ||
   value === "camera" ||
