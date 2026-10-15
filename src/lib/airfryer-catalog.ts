@@ -11,14 +11,77 @@ export const voltageOptions = [
 export const descriptionImages = gallery.slice(1);
 export const creatorVideos: { poster: string; src: string }[] = [];
 
-/** Avaliações individuais não foram fornecidas. Não atribuir comentários a clientes fictícios. */
+/** Avaliações transcritas dos prints enviados pelo usuário; fotos associadas por ordem. */
 export const reviews: Array<{
   name: string;
   stars: number;
   variant: string;
   text: string;
   photos: string[];
-}> = [];
+  verified?: boolean;
+  country?: string;
+  date?: string;
+}> = [
+  {
+    name: "j**a",
+    stars: 5,
+    variant: "127V",
+    text: "Vou usar depois falo. Chegou bem embalado, entrega no prazo.",
+    photos: ["/products/airfryer/reviews/review-1.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-09-21",
+  },
+  {
+    name: "s**!",
+    stars: 5,
+    variant: "220V",
+    text: "Gente a Air fryer é linda, preto espelhado, chegou em excelentes condições, super rápido, tamanho ideal, não é pequena, design lindíssimo, gostei bastante, e o melhor proporciona fritar sem óleo, maravilhosa, recomendo o vendedor.",
+    photos: ["/products/airfryer/reviews/review-2.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-09-17",
+  },
+  {
+    name: "U**✌",
+    stars: 5,
+    variant: "Não informado",
+    text: "Qualidade do trabalho: Compacta, leve e super fácil de usar. Capacidade: Ótima capacidade pras minhas necessidades. Design: Compacto, enxuto sem frescuras pra usar. Adorei o produto.",
+    photos: ["/products/airfryer/reviews/review-3.jpg"],
+    verified: true,
+    country: "BR",
+  },
+  {
+    name: "A**a",
+    stars: 5,
+    variant: "220V",
+    text: "Capacidade: Boa. Design: Linda. Pequena mas eu gostei.",
+    photos: ["/products/airfryer/reviews/review-4.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-07-23",
+  },
+  {
+    name: "v**o",
+    stars: 5,
+    variant: "127V",
+    text: "Chegou em ótimo estado estou apaixonada.",
+    photos: ["/products/airfryer/reviews/review-5.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-08-23",
+  },
+  {
+    name: "A**a B**o",
+    stars: 4,
+    variant: "127V",
+    text: "Qualidade do trabalho: Bom. Capacidade: Boa. Design: Lindo. Gostei muito, superou minhas expectativas, amei já usei.",
+    photos: ["/products/airfryer/reviews/review-6.jpg"],
+    verified: true,
+    country: "BR",
+    date: "2026-07-24",
+  },
+];
 
 export const product = {
   slug: "airfryer",
@@ -30,8 +93,8 @@ export const product = {
   discountValue: 120,
   shipping: 0,
   installments: { count: 1, value: 79.90 },
-  rating: 0,
-  ratingCount: 0,
+  rating: 4.8,
+  ratingCount: 6,
   sold: "—",
   variant: "110V",
   store: {
