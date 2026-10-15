@@ -18,6 +18,15 @@ import { useEffect, useRef, useState } from "react";
 import { BottomSheet, Toasts } from "@/components/tt/BottomSheet";
 import { Shell } from "@/components/tt/Shell";
 import {
+  gallery as airfryerGallery,
+  voltageOptions as airfryerVoltageOptions,
+  descriptionImages as airfryerDescriptionImages,
+  creatorVideos as airfryerCreatorVideos,
+  money as airfryerMoney,
+  product as airfryerProduct,
+  reviews as airfryerReviews,
+} from "@/lib/airfryer-catalog";
+import {
   colorImages as relogioColorImages,
   gallery as relogioGallery,
   descriptionImages as relogioDescriptionImages,
@@ -183,6 +192,7 @@ export function ProductPage({
     | "camera"
     | "whey"
     | "relogio"
+    | "airfryer"
     | "ferramentas"
     | "panela"
     | "forno"
@@ -197,6 +207,7 @@ export function ProductPage({
   const isCamera = productKey === "camera";
   const isWhey = productKey === "whey";
   const isRelogio = productKey === "relogio";
+  const isAirfryer = productKey === "airfryer";
   const isFerramentas = productKey === "ferramentas";
   const isPanela = productKey === "panela";
   const isForno = productKey === "forno";
@@ -207,7 +218,7 @@ export function ProductPage({
   const isMagnesio = productKey === "magnesio";
   const isWap = productKey === "wap";
   const isSerum = productKey === "serum";
-  const gallery = isRelogio ? relogioGallery : isWhey ? wheyGallery : isCamera ? cameraGallery : isSerum
+  const gallery = isAirfryer ? airfryerGallery : isRelogio ? relogioGallery : isWhey ? wheyGallery : isCamera ? cameraGallery : isSerum
     ? serumGallery
     : isWap
     ? wapGallery
@@ -228,7 +239,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasGallery
           : chainsawGallery;
-  const descriptionImages = isRelogio ? relogioDescriptionImages : isWhey ? wheyDescriptionImages : isCamera ? cameraDescriptionImages : isSerum
+  const descriptionImages = isAirfryer ? airfryerDescriptionImages : isRelogio ? relogioDescriptionImages : isWhey ? wheyDescriptionImages : isCamera ? cameraDescriptionImages : isSerum
     ? serumDescriptionImages
     : isWap
       ? wapDescriptionImages
@@ -249,7 +260,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasDescriptionImages
           : chainsawDescriptionImages;
-  const creatorVideos = isRelogio ? relogioCreatorVideos : isWhey ? wheyCreatorVideos : isCamera ? cameraCreatorVideos : isSerum
+  const creatorVideos = isAirfryer ? airfryerCreatorVideos : isRelogio ? relogioCreatorVideos : isWhey ? wheyCreatorVideos : isCamera ? cameraCreatorVideos : isSerum
     ? serumCreatorVideos
     : isWap
       ? wapCreatorVideos
@@ -270,7 +281,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasCreatorVideos
           : chainsawCreatorVideos;
-  const product = isRelogio ? relogioProduct : isWhey ? wheyProduct : isCamera ? cameraProduct : isSerum
+  const product = isAirfryer ? airfryerProduct : isRelogio ? relogioProduct : isWhey ? wheyProduct : isCamera ? cameraProduct : isSerum
     ? serumProduct
     : isWap
       ? wapProduct
@@ -291,7 +302,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasProduct
           : chainsawProduct;
-  const reviews = isRelogio ? relogioReviews : isWhey ? wheyReviews : isCamera ? cameraReviews : isSerum
+  const reviews = isAirfryer ? airfryerReviews : isRelogio ? relogioReviews : isWhey ? wheyReviews : isCamera ? cameraReviews : isSerum
     ? serumReviews
     : isWap
       ? wapReviews
@@ -312,7 +323,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasReviews
           : chainsawReviews;
-  const money = isRelogio ? relogioMoney : isWhey ? wheyMoney : isCamera ? cameraMoney : isSerum
+  const money = isAirfryer ? airfryerMoney : isRelogio ? relogioMoney : isWhey ? wheyMoney : isCamera ? cameraMoney : isSerum
     ? serumMoney
     : isWap
       ? wapMoney
@@ -333,6 +344,7 @@ export function ProductPage({
         : isFerramentas
           ? ferramentasMoney
           : chainsawMoney;
+  const airfryerOptions = airfryerVoltageOptions;
   const relogioColorOptions = [
     { name: "Preto", image: relogioColorImages.Preto },
     { name: "Branco", image: relogioColorImages.Branco },
@@ -416,6 +428,7 @@ export function ProductPage({
 
   const deliveryWindow = useDeliveryWindow();
   const [slide, setSlide] = useState(1);
+  const [selectedAirfryerVoltage, setSelectedAirfryerVoltage] = useState(airfryerOptions[0] ?? fallbackVariant);
   const [selectedRelogioColor, setSelectedRelogioColor] = useState(relogioColorOptions[0] ?? fallbackVariant);
   const [selectedWheyFlavor, setSelectedWheyFlavor] = useState(wheyFlavorOptions[0] ?? fallbackVariant);
   const [selectedCameraColor, setSelectedCameraColor] = useState(cameraColorOptions[0] ?? fallbackVariant);
@@ -442,7 +455,9 @@ export function ProductPage({
   const [saved, setSaved] = useState(false);
   const checkoutKey = productKey;
   const selectedGallery =
-    isRelogio
+    isAirfryer
+      ? [selectedAirfryerVoltage.image, ...airfryerGallery.filter((image) => image !== selectedAirfryerVoltage.image)]
+      : isRelogio
       ? [selectedRelogioColor.image, ...relogioGallery.filter((image) => image !== selectedRelogioColor.image)]
       : isWhey
       ? [selectedWheyFlavor.image, ...wheyGallery.filter((image) => image !== selectedWheyFlavor.image)]
@@ -471,6 +486,10 @@ export function ProductPage({
 
   useEffect(() => {
     setQty(getQty());
+    if (isAirfryer) {
+      saveSelectedVariantImage(selectedAirfryerVoltage.image);
+      saveSelectedVariantLabel(selectedAirfryerVoltage.name);
+    }
     if (isRelogio) {
       saveSelectedVariantImage(selectedRelogioColor.image);
       saveSelectedVariantLabel(selectedRelogioColor.name);
@@ -611,7 +630,7 @@ export function ProductPage({
                   </span>
                   <span className="mb-[5px] text-[12px] font-bold leading-none">R$</span>
                   <span className="text-[28px] font-extrabold leading-[0.85] tracking-[-0.02em]">
-                    {isCamera || isWhey || isRelogio ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
+                    {isCamera || isWhey || isRelogio || isAirfryer ? product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : money(product.price)}
                   </span>
                   <Ticket
                     aria-hidden="true"
@@ -731,7 +750,9 @@ export function ProductPage({
                 <LayoutGrid aria-hidden="true" className="h-[16px] w-[16px] shrink-0 text-[#5a5b60]" strokeWidth={1.9} />
                 <img
                   src={
-                    isRelogio
+                    isAirfryer
+                      ? selectedAirfryerVoltage.image
+                      : isRelogio
                       ? selectedRelogioColor.image
                       : isWhey
                       ? selectedWheyFlavor.image
@@ -754,7 +775,9 @@ export function ProductPage({
                             : gallery[0]
                   }
                   alt={
-                    isRelogio
+                    isAirfryer
+                      ? selectedAirfryerVoltage.name
+                      : isRelogio
                       ? selectedRelogioColor.name
                       : isWhey
                       ? selectedWheyFlavor.name
@@ -773,7 +796,9 @@ export function ProductPage({
                 <span className="text-[13px] text-[#5a5b60]">
                   Selecionado:{" "}
                   <span className="text-[#161823]">
-                    {isRelogio
+                    {isAirfryer
+                      ? selectedAirfryerVoltage.name
+                      : isRelogio
                       ? selectedRelogioColor.name
                       : isWhey
                       ? selectedWheyFlavor.name
@@ -836,7 +861,7 @@ export function ProductPage({
           </div>
         </div>
 
-        {((!isCamera && !isWhey && !isRelogio) || creatorVideos.length > 0) && (<div className="mt-2 bg-white px-4 pt-3">
+        {((!isCamera && !isWhey && !isRelogio && !isAirfryer) || creatorVideos.length > 0) && (<div className="mt-2 bg-white px-4 pt-3">
           <div className="mb-2 text-[15px] font-semibold">
             Vídeos de criadores ({creatorVideos.length})
           </div>
@@ -886,13 +911,13 @@ export function ProductPage({
         <div ref={reviewsRef} className="mt-2 bg-white px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-[14px]">
-              {!isCamera && (!isWhey || reviews.length > 0) && (!isRelogio || reviews.length > 0) && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
+              {!isCamera && !isAirfryer && (!isWhey || reviews.length > 0) && (!isRelogio || reviews.length > 0) && (<><Star aria-hidden="true" className="h-4 w-4 fill-[#f2b900] text-[#f2b900]" />
               <b>{product.rating}</b>
               <span className="mx-1 text-[#d0d0d3]">|</span></>)}
               <span className="font-semibold">Avaliações dos clientes ({product.ratingCount})</span>
               <Info aria-hidden="true" className="h-3.5 w-3.5 text-[#8a8b91]" />
             </div>
-            {!isCamera && !isWhey && !isRelogio && (<Link
+            {!isCamera && !isWhey && !isRelogio && !isAirfryer && (<Link
               to={
                 isPanela
                   ? "/panela"
@@ -910,7 +935,7 @@ export function ProductPage({
               <ChevronRight aria-hidden="true" className="h-4 w-4" />
             </Link>)}
           </div>
-          {(isCamera || isWhey || isRelogio) && reviews.length === 0 && (
+          {(isCamera || isWhey || isRelogio || isAirfryer) && reviews.length === 0 && (
             <p className="mt-3 text-[13px] text-[#777]">Ainda não há avaliações verificadas disponíveis para este produto.</p>
           )}
           {reviews.map((r, reviewIndex) => (
@@ -987,7 +1012,7 @@ export function ProductPage({
               <div className="text-[12px] text-[#8a8b91]">{product.store.sold}</div>
             </div>
           </div>
-          {!isCamera && !isWhey && !isRelogio && (<div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
+          {!isCamera && !isWhey && !isRelogio && !isAirfryer && (<div className="mt-3 flex items-center gap-6 text-[12px] text-[#5a5b60]">
             <span>
               <b className="text-[#161823]">100%</b> responde em 24 horas
             </span>
@@ -1077,7 +1102,9 @@ export function ProductPage({
           <div className="flex gap-3">
             <img
               src={
-                isRelogio
+                isAirfryer
+                  ? selectedAirfryerVoltage.image
+                  : isRelogio
                   ? selectedRelogioColor.image
                   : isWhey
                   ? selectedWheyFlavor.image
@@ -1096,7 +1123,9 @@ export function ProductPage({
                       : gallery[0]
               }
               alt={
-                isRelogio
+                isAirfryer
+                  ? selectedAirfryerVoltage.name
+                  : isRelogio
                   ? selectedRelogioColor.name
                   : isWhey
                   ? selectedWheyFlavor.name
@@ -1154,9 +1183,11 @@ export function ProductPage({
             </div>
           </div>
           <div className="mt-3 text-[15px] font-semibold text-[#161823]">
-            {isRelogio || isWhey || isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
-              ? `${isWhey ? "Sabor" : isWap ? "Voltagem" : "Cor"} (${
-                  isRelogio
+            {isAirfryer || isRelogio || isWhey || isCamera || isWap || isPanela || isTablet || isTablet2 || isShort || isBermuda
+              ? `${isWhey ? "Sabor" : isWap || isAirfryer ? "Voltagem" : "Cor"} (${
+                  isAirfryer
+                    ? airfryerOptions.length
+                    : isRelogio
                     ? relogioColorOptions.length
                     : isWhey
                     ? wheyFlavorOptions.length
@@ -1177,7 +1208,9 @@ export function ProductPage({
               : "(1)"}
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(isRelogio
+            {(isAirfryer
+              ? airfryerOptions
+              : isRelogio
               ? relogioColorOptions
               : isWhey
               ? wheyFlavorOptions
@@ -1204,6 +1237,7 @@ export function ProductPage({
                   key={option.name}
                   type="button"
                   onClick={() => {
+                    if (isAirfryer) setSelectedAirfryerVoltage(option);
                     if (isRelogio) setSelectedRelogioColor(option);
                     if (isWhey) setSelectedWheyFlavor(option);
                     if (isCamera) setSelectedCameraColor(option);
@@ -1220,7 +1254,7 @@ export function ProductPage({
                     if (isShort) setSelectedShortColor(option);
                     if (isBermuda) setSelectedBermudaColor(option);
                     if (isMagnesio) setSelectedMagnesioFlavor(option);
-                    if (!isRelogio && !isWhey && !isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
+                    if (!isAirfryer && !isRelogio && !isWhey && !isCamera && !isWap && !isPanela && !isTablet && !isTablet2 && !isShort && !isBermuda && !isMagnesio) return;
                     saveSelectedVariantImage(option.image);
                     saveSelectedVariantLabel(
                       isBermuda
@@ -1234,7 +1268,8 @@ export function ProductPage({
                   }}
                   className={cn(
                     "relative inline-block overflow-hidden rounded-lg border-2",
-                    (!isRelogio &&
+                    (!isAirfryer &&
+                      !isRelogio &&
                       !isWhey &&
                       !isCamera &&
                       !isWap &&
@@ -1244,6 +1279,7 @@ export function ProductPage({
                       !isShort &&
                       !isBermuda &&
                       !isMagnesio) ||
+                    (isAirfryer && selectedAirfryerVoltage.name === option.name) ||
                     (isRelogio && selectedRelogioColor.name === option.name) ||
                     (isWhey && selectedWheyFlavor.name === option.name) ||
                     (isCamera && selectedCameraColor.name === option.name) ||
