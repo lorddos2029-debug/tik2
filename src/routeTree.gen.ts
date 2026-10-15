@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as AirfryerRouteImport } from './routes/airfryer'
 import { Route as RelogioRouteImport } from './routes/relogio'
 import { Route as WheyRouteImport } from './routes/whey'
 import { Route as CameraRouteImport } from './routes/camera'
@@ -44,6 +45,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AirfryerRoute = AirfryerRouteImport.update({
+  id: '/airfryer',
+  path: '/airfryer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RelogioRoute = RelogioRouteImport.update({
@@ -170,6 +176,7 @@ const PMotoserraCheckoutRoute = PMotoserraCheckoutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/airfryer': typeof AirfryerRoute
   '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/airfryer': typeof AirfryerRoute
   '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/airfryer': typeof AirfryerRoute
   '/relogio': typeof RelogioRoute
   '/whey': typeof WheyRoute
   '/camera': typeof CameraRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/airfryer'
     | '/relogio'
     | '/whey'
     | '/camera'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/airfryer'
     | '/relogio'
     | '/whey'
     | '/camera'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/airfryer'
     | '/relogio'
     | '/whey'
     | '/camera'
@@ -340,6 +352,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  AirfryerRoute: typeof AirfryerRoute
   RelogioRoute: typeof RelogioRoute
   WheyRoute: typeof WheyRoute
   CameraRoute: typeof CameraRoute
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/airfryer': {
+      id: '/airfryer'
+      path: '/airfryer'
+      fullPath: '/airfryer'
+      preLoaderRoute: typeof AirfryerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/relogio': {
@@ -569,6 +589,7 @@ const PMotoserraRouteWithChildren = PMotoserraRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  AirfryerRoute: AirfryerRoute,
   RelogioRoute: RelogioRoute,
   WheyRoute: WheyRoute,
   CameraRoute: CameraRoute,
