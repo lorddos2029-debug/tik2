@@ -35,10 +35,10 @@ export const product = {
   sold: "—",
   variant: "110V",
   store: {
-    name: "Loja de Eletrodomésticos",
-    initials: "Elgin",
+    name: "TikTok",
+    initials: "TikTok",
     color: "#161823",
-    sold: "Fritadeira Elgin",
+    sold: "24.312 vendidos",
   },
   specs: [
     "Air Fryer Elgin Facilita Fry, cor preta, capacidade de 3,5 litros.",
